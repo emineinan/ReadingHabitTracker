@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.huawei.agconnect'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -73,6 +76,19 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
+    // OnBoarding Circle Indicator
+    implementation 'me.relex:circleindicator:2.1.6'
+
+    // Data Store
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:2.42"
+    kapt 'com.google.dagger:hilt-compiler:2.42'
+
     // Huawei Account Kit
     implementation 'com.huawei.hms:hwid:6.4.0.301'
+
+    //Huawei Auth Service
+    implementation "com.huawei.agconnect:agconnect-auth:1.6.5.300"
 }

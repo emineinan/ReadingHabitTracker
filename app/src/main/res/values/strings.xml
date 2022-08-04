@@ -2,4 +2,15 @@
     <string name="app_name">ReadingHabitTracker</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="next">Next</string>
+    <string name="finish">FINISH</string>
+
+
+    <!-- OnBoarding -->
+    <string name="on_boarding_title1">START</string>
+    <string name="on_boarding_title2">IMPROVE</string>
+    <string name="on_boarding_title3">REACH</string>
+    <string name="on_boarding_description1">Start Your Reading Journey Today</string>
+    <string name="on_boarding_description2">Improve Your Reading Habit</string>
+    <string name="on_boarding_description3">Reach Your Reading Goal</string>
 </resources>
