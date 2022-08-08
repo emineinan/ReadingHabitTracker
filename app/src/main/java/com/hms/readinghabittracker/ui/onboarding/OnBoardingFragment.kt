@@ -61,8 +61,8 @@ class OnBoardingFragment : Fragment() {
                     binding.buttonNext.text =
                         getString(R.string.finish)
                     binding.buttonNext.setOnClickListener {
-                        viewModel.saveOnBoardingShowedStatus(true)
                         findNavController().navigate(R.id.action_onBoardingFragment_to_loginFragment)
+                        viewModel.saveOnBoardingShowedStatus(true)
                     }
                 } else {
                     binding.buttonNext.text = getString(R.string.next)
