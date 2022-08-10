@@ -34,7 +34,7 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-            delay(2000)
+            delay(4000)
             if (authInstance.currentUser != null) {
                 findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
             } else {
