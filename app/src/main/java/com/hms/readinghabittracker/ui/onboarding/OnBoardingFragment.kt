@@ -22,15 +22,15 @@ class OnBoardingFragment : Fragment() {
             listOf(
                 OnBoardingItem(
                     getString(R.string.on_boarding_description1),
-                    R.drawable.book
+                    R.drawable.ic_timer
                 ),
                 OnBoardingItem(
                     getString(R.string.on_boarding_description2),
-                    R.drawable.goal
+                    R.drawable.ic_goal
                 ),
                 OnBoardingItem(
                     getString(R.string.on_boarding_description3),
-                    R.drawable.reader
+                    R.drawable.ic_reader
                 )
             )
         )
