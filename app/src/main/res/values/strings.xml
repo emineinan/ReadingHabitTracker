@@ -5,12 +5,9 @@
     <string name="next">Next</string>
     <string name="finish">FINISH</string>
 
-
     <!-- OnBoarding -->
-    <string name="on_boarding_title1">START</string>
-    <string name="on_boarding_title2">IMPROVE</string>
-    <string name="on_boarding_title3">REACH</string>
-    <string name="on_boarding_description1">Start Your Reading Journey Today</string>
-    <string name="on_boarding_description2">Improve Your Reading Habit</string>
-    <string name="on_boarding_description3">Reach Your Reading Goal</string>
+    <string name="on_boarding_description1">Track Your Reading Time and Reading Habit</string>
+    <string name="on_boarding_description2">Achieve Your Reading Goals</string>
+    <string name="on_boarding_description3">Become a Better Reader</string>
+    <string name="icon">Icon</string>
 </resources>
