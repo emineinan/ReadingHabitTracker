@@ -15,7 +15,6 @@ class OnBoardingAdapter(private val onBoardingItems: List<OnBoardingItem>) :
 
         fun bind(onBoardingItem: OnBoardingItem) {
             binding.imageViewOnBoardingItem.setImageResource(onBoardingItem.icon)
-            binding.textViewTitle.text = onBoardingItem.title
             binding.textViewDescription.text = onBoardingItem.description
         }
     }

@@ -21,19 +21,16 @@ class OnBoardingFragment : Fragment() {
         OnBoardingAdapter(
             listOf(
                 OnBoardingItem(
-                    getString(R.string.on_boarding_title1),
                     getString(R.string.on_boarding_description1),
-                    R.drawable.ic_book
+                    R.drawable.ic_timer
                 ),
                 OnBoardingItem(
-                    getString(R.string.on_boarding_title2),
                     getString(R.string.on_boarding_description2),
-                    R.drawable.ic_book
+                    R.drawable.ic_goal
                 ),
                 OnBoardingItem(
-                    getString(R.string.on_boarding_title3),
                     getString(R.string.on_boarding_description3),
-                    R.drawable.ic_book
+                    R.drawable.ic_reader
                 )
             )
         )
