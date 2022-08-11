@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="next">Next</string>
-    <string name="finish">FINISH</string>
+    <string name="finish">Finish</string>
 
     <!-- OnBoarding -->
     <string name="on_boarding_description1">Track Your Reading Time and Reading Habit</string>
