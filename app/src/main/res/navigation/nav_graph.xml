@@ -53,4 +53,9 @@
             app:popUpTo="@id/onBoardingFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/goalsFragment"
+        android:name="com.hms.readinghabittracker.ui.goals.GoalsFragment"
+        android:label="fragment_goals"
+        tools:layout="@layout/fragment_goals" />
 </navigation>
