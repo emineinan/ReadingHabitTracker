@@ -36,7 +36,7 @@ class SplashFragment : Fragment() {
         lifecycleScope.launch {
             delay(4000)
             if (authInstance.currentUser != null) {
-                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+                findNavController().navigate(R.id.action_splashFragment_to_myBooksFragment)
             } else {
                 viewModel.isOnBoardingShowedFlow.collect {
                     if (it) {

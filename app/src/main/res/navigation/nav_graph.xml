@@ -6,18 +6,18 @@
     app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.hms.readinghabittracker.ui.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/myBooksFragment"
+        android:name="com.hms.readinghabittracker.ui.mybooks.MyBooksFragment"
+        android:label="fragment_my_books"
+        tools:layout="@layout/fragment_my_books" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.hms.readinghabittracker.ui.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_loginFragment_to_myBooksFragment"
+            app:destination="@id/myBooksFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -27,8 +27,8 @@
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splashFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_splashFragment_to_myBooksFragment"
+            app:destination="@id/myBooksFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
         <action

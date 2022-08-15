@@ -47,7 +47,7 @@ class LoginFragment : Fragment() {
         if (requestCode == Constant.loginRequestCode) {
             if (resultCode == Activity.RESULT_OK) {
                 viewModel.userSignedIn(data)
-                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                findNavController().navigate(R.id.action_loginFragment_to_myBooksFragment)
             }
         }
     }
