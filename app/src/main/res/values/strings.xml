@@ -10,4 +10,6 @@
     <string name="on_boarding_description2">Achieve Your Reading Goals</string>
     <string name="on_boarding_description3">Become a Better Reader</string>
     <string name="icon">Icon</string>
+    <string name="my_books">My Books</string>
+    <string name="goals">Goals</string>
 </resources>
