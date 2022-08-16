@@ -12,4 +12,6 @@
     <string name="icon">Icon</string>
     <string name="my_books">My Books</string>
     <string name="goals">Goals</string>
+    <string name="add_book">Add Book</string>
+    <string name="collections">Collections</string>
 </resources>
