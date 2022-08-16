@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.hms.readinghabittracker.listener.IServiceListener
 import com.hms.readinghabittracker.service.AuthenticationService
 import com.huawei.agconnect.auth.AGConnectUser
-import com.huawei.hms.support.hwid.result.AuthHuaweiId
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -26,20 +25,4 @@ class LoginViewModel @Inject constructor(private val authenticationService: Auth
             }
         })
     }
-
-    fun userSignedIn(authHuaweiId: AuthHuaweiId) {
-        authenticationService.getSignedInUser(
-            authHuaweiId,
-            object : IServiceListener<AGConnectUser> {
-                override fun onSuccess(successResult: AGConnectUser) {
-                    agConnectUser = successResult
-                }
-
-                override fun onError() {
-                    agConnectUser = null
-                }
-            })
-    }
-
-    fun getAGConnectUser() = agConnectUser
 }

@@ -1,20 +1,11 @@
 package com.hms.readinghabittracker.ui.mybooks
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.FragmentMyBooksBinding
 
-class MyBooksFragment : Fragment() {
-    private lateinit var binding: FragmentMyBooksBinding
+class MyBooksFragment :
+    BaseFragment<FragmentMyBooksBinding, MyBooksViewModel>(FragmentMyBooksBinding::inflate) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentMyBooksBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override val viewModel: MyBooksViewModel by viewModels()
 }
