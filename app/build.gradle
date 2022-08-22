@@ -89,9 +89,13 @@ dependencies {
     //Lottie Animation
     implementation 'com.airbnb.android:lottie:5.2.0'
 
+    // HMS Core Kits
     // Huawei Account Kit
     implementation 'com.huawei.hms:hwid:6.4.0.301'
 
-    //Huawei Auth Service
+    // Huawei Auth Service
     implementation "com.huawei.agconnect:agconnect-auth:1.6.5.300"
+
+    // Huawei Cloud DB
+    implementation 'com.huawei.agconnect:agconnect-cloud-database:1.5.3.300'
 }
