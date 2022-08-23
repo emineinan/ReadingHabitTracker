@@ -4,14 +4,21 @@
  */
 package com.hms.readinghabittracker.data.model;
 
-import com.huawei.agconnect.cloud.database.annotations.PrimaryKeys;
 import com.huawei.agconnect.cloud.database.CloudDBZoneObject;
+import com.huawei.agconnect.cloud.database.annotations.PrimaryKeys;
 
+/**
+ * Definition of ObjectType Collection.
+ *
+ * @since 2022-08-23
+ */
 @PrimaryKeys({"id"})
 public final class Collection extends CloudDBZoneObject {
     private Integer id;
 
     private String name;
+
+    private Integer userId;
 
     public Collection() {
         super(Collection.class);
@@ -31,6 +38,14 @@ public final class Collection extends CloudDBZoneObject {
 
     public String getName() {
         return name;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getUserId() {
+        return userId;
     }
 
 }

@@ -6,7 +6,15 @@ package com.hms.readinghabittracker.data.model;
 
 import com.huawei.agconnect.cloud.database.annotations.PrimaryKeys;
 import com.huawei.agconnect.cloud.database.CloudDBZoneObject;
+import com.huawei.agconnect.cloud.database.Text;
 
+import java.util.Date;
+
+/**
+ * Definition of ObjectType Book.
+ *
+ * @since 2022-08-23
+ */
 @PrimaryKeys({"id"})
 public final class Book extends CloudDBZoneObject {
     private Integer id;
@@ -17,9 +25,11 @@ public final class Book extends CloudDBZoneObject {
 
     private Integer pages;
 
-    private String collectionId;
-
     private String photo;
+
+    private Integer userId;
+
+    private Integer collectionId;
 
     public Book() {
         super(Book.class);
@@ -57,20 +67,28 @@ public final class Book extends CloudDBZoneObject {
         return pages;
     }
 
-    public void setCollectionId(String collectionId) {
-        this.collectionId = collectionId;
-    }
-
-    public String getCollectionId() {
-        return collectionId;
-    }
-
     public void setPhoto(String photo) {
         this.photo = photo;
     }
 
     public String getPhoto() {
         return photo;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setCollectionId(Integer collectionId) {
+        this.collectionId = collectionId;
+    }
+
+    public Integer getCollectionId() {
+        return collectionId;
     }
 
 }

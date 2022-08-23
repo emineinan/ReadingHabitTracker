@@ -10,6 +10,11 @@ import com.huawei.agconnect.cloud.database.Text;
 
 import java.util.Date;
 
+/**
+ * Definition of ObjectType User.
+ *
+ * @since 2022-08-23
+ */
 @PrimaryKeys({"id"})
 public final class User extends CloudDBZoneObject {
     private Integer id;
