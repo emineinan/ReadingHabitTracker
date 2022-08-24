@@ -88,7 +88,10 @@ dependencies {
 
     //Lottie Animation
     implementation 'com.airbnb.android:lottie:5.2.0'
-    
+
+    // Easy Permissions
+    implementation 'pub.devrel:easypermissions:3.0.0'
+
     // HMS Core Kits
     // Huawei Account Kit
     implementation 'com.huawei.hms:hwid:6.4.0.301'
