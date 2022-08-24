@@ -9,9 +9,11 @@
     <string name="on_boarding_description1">Track Your Reading Time and Reading Habit</string>
     <string name="on_boarding_description2">Achieve Your Reading Goals</string>
     <string name="on_boarding_description3">Become a Better Reader</string>
+    
     <string name="icon">Icon</string>
     <string name="my_books">My Books</string>
     <string name="goals">Goals</string>
     <string name="add_book">Add Book</string>
     <string name="collections">Collections</string>
+    <string name="time">Time</string>
 </resources>
