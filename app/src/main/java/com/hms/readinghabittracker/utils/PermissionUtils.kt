@@ -1,116 +1,54 @@
 package com.hms.readinghabittracker.utils
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
-import pub.devrel.easypermissions.EasyPermissions
+import android.content.pm.PackageManager
+import android.os.Build
+import android.util.Log
+import androidx.core.app.ActivityCompat
 
 object PermissionUtils {
+    private val TAG = "permissionManager"
 
-    const val ACCESS_FINE_LOCATION = android.Manifest.permission.ACCESS_FINE_LOCATION
-    const val ACCESS_COARSE_LOCATION = android.Manifest.permission.ACCESS_COARSE_LOCATION
-    const val LOCATION_REQUEST_CODE = 100
-
-
-
-    fun hasLocationPermissions(context: Context) =
-        EasyPermissions.hasPermissions(
-            context,
-            ACCESS_FINE_LOCATION,
-            ACCESS_COARSE_LOCATION
-        )
-
-    /*fun checkSelfPermissionForLocation(context: Context): Boolean {
-        return ActivityCompat.checkSelfPermission(
-            context,
-            ACCESS_FINE_LOCATION
-        ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
-            context,
-            ACCESS_COARSE_LOCATION
-        ) != PackageManager.PERMISSION_GRANTED
-    }
-    fun requestLocationPermissions(
-        fragment: Fragment
-    ) {
-        ActivityCompat.requestPermissions(
-            fragment.requireActivity(), arrayOf(
-                ACCESS_FINE_LOCATION,
-                ACCESS_COARSE_LOCATION
-            ), LOCATION_REQUEST_CODE
-        )
-    }
-    fun verifyPermissions(grantResults: IntArray): Boolean {
-        if (grantResults.isEmpty()) {
-            return false
-        }
-        for (result in grantResults) {
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                return false
+    fun hasLocationPermission(context: Context, activity: Activity) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            Log.i(TAG, "android sdk <= 28 Q")
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                val strings = arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+                ActivityCompat.requestPermissions(activity, strings, 1)
+            }
+        } else {
+            // Dynamically apply for required permissions if the API level is greater than 28. The android.permission.ACCESS_BACKGROUND_LOCATION permission is required.
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    context,
+                    "android.permission.ACCESS_BACKGROUND_LOCATION"
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                val strings = arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    "android.permission.ACCESS_BACKGROUND_LOCATION"
+                )
+                ActivityCompat.requestPermissions(activity, strings, 2)
             }
         }
-        return true
     }
-    fun shouldShowRequestForLocationPermission(activity: Activity): Boolean {
-        return ActivityCompat.shouldShowRequestPermissionRationale(
-            activity,
-            ACCESS_FINE_LOCATION
-        ) || ActivityCompat.shouldShowRequestPermissionRationale(
-            activity,
-            ACCESS_COARSE_LOCATION
-        )
-    }
-     private const val LOCATION_REQUEST_CODE = 100
-     private fun requestLocationPermissions(activity: Activity) {
-         ActivityCompat.requestPermissions(
-             activity,
-             arrayOf(
-                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                 Manifest.permission.ACCESS_FINE_LOCATION
-             ),
-             LOCATION_REQUEST_CODE
-         )
-     }
-     private fun checkLocationPermissions(context: Context): Boolean {
-         if (ActivityCompat.checkSelfPermission(
-                 context,
-                 Manifest.permission.ACCESS_COARSE_LOCATION
-             ) == PackageManager.PERMISSION_GRANTED &&
-             ActivityCompat.checkSelfPermission(
-                 context,
-                 Manifest.permission.ACCESS_FINE_LOCATION
-             ) == PackageManager.PERMISSION_GRANTED
-         ) {
-             return true
-         }
-         return false
-     }
-     fun getLocation(activity: Activity, onSuccessCallback: (Double, Double) -> Unit,) {
-         if (checkLocationPermissions(activity)) {
-             LocationRequest.create().apply {
-                 priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-                 interval = 0
-                 fastestInterval = 0
-                 numUpdates = 1
-                 if (ActivityCompat.checkSelfPermission(
-                         activity.applicationContext,
-                         Manifest.permission.ACCESS_FINE_LOCATION
-                     ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                         activity.applicationContext,
-                         Manifest.permission.ACCESS_COARSE_LOCATION
-                     ) != PackageManager.PERMISSION_GRANTED
-                 ) {
-                     return
-                 } else {
-                     val client = LocationServices.getFusedLocationProviderClient(activity)
-                     client.lastLocation.addOnSuccessListener { location: Location? ->
-                         location?.let { loc ->
-                             onSuccessCallback(loc.latitude, loc.longitude)
-                         }
-                     }
-                 }
-             }
-         } else {
-             requestLocationPermissions(activity)
-         }
-     }*/
-
-
 }
