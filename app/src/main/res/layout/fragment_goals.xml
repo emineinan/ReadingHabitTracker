@@ -7,15 +7,16 @@
     tools:context=".ui.goals.GoalsFragment">
 
     <TextView
+        android:id="@+id/textViewTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/goals"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/time" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

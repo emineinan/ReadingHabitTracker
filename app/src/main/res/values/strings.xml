@@ -4,14 +4,19 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="next">Next</string>
     <string name="finish">Finish</string>
-
-    <!-- OnBoarding -->
-    <string name="on_boarding_description1">Track Your Reading Time and Reading Habit</string>
-    <string name="on_boarding_description2">Achieve Your Reading Goals</string>
-    <string name="on_boarding_description3">Become a Better Reader</string>
     <string name="icon">Icon</string>
     <string name="my_books">My Books</string>
     <string name="goals">Goals</string>
     <string name="add_book">Add Book</string>
     <string name="collections">Collections</string>
+    <string name="time">Time</string>
+    
+    <!-- OnBoarding -->
+    <string name="on_boarding_description1">Track Your Reading Time and Reading Habit</string>
+    <string name="on_boarding_description2">Achieve Your Reading Goals</string>
+    <string name="on_boarding_description3">Become a Better Reader</string>
+
+    <!-- Permission -->
+    <string name="location_permission">You need to allow location permissions to use this app.</string>
+
 </resources>
