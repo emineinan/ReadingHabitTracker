@@ -3,6 +3,7 @@ package com.hms.readinghabittracker.ui.goals
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.fragment.app.viewModels
+import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.FragmentGoalsBinding
 import com.hms.readinghabittracker.utils.PermissionUtils
@@ -25,10 +26,11 @@ class GoalsFragment :
     private fun requestPermissions() {
         if (PermissionUtils.hasLocationPermissions(requireContext())) {
             getTimes()
+            return
         }
         EasyPermissions.requestPermissions(
             this,
-            "You need to allow location permissions to use this app.",
+            getString(R.string.location_permission),
             PermissionUtils.LOCATION_REQUEST_CODE,
             PermissionUtils.ACCESS_COARSE_LOCATION,
             PermissionUtils.ACCESS_FINE_LOCATION
@@ -61,11 +63,8 @@ class GoalsFragment :
         Awareness.getCaptureClient(requireContext()).timeCategories
             .addOnSuccessListener { timeCategoriesResponse: TimeCategoriesResponse ->
                 val categories = timeCategoriesResponse.timeCategories
-                val timeInfo = categories.timeCategories
-                for (timeCode in timeInfo) {
-                    binding.textViewTime.text =
-                        timeDescriptionMap.get(timeCode)
-                }
+                val timeInfo = categories.timeCategories.last()
+                binding.textViewTime.text = timeDescriptionMap.get(timeInfo)
             }
             .addOnFailureListener { e: Exception? ->
                 Log.e("Awareness Kit", e?.localizedMessage.toString())
