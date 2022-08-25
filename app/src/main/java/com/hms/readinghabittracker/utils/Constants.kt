@@ -1,5 +1,5 @@
 package com.hms.readinghabittracker.utils
 
-object Constant {
+object Constants {
     const val loginRequestCode = 1003
 }
