@@ -62,7 +62,7 @@ android {
 }
 
 dependencies {
-    def nav_version = "2.5.0"
+    def nav_version = "2.5.1"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
@@ -97,7 +97,7 @@ dependencies {
     implementation 'com.huawei.hms:hwid:6.4.0.301'
 
     // Huawei Auth Service
-    implementation "com.huawei.agconnect:agconnect-auth:1.6.5.300"
+    implementation "com.huawei.agconnect:agconnect-auth:1.7.0.300"
 
     // Huawei Cloud DB
     implementation 'com.huawei.agconnect:agconnect-cloud-database:1.5.3.300'
