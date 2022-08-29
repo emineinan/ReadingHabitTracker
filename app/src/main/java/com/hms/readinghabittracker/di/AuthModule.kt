@@ -1,8 +1,6 @@
 package com.hms.readinghabittracker.di
 
 import android.content.Context
-import com.hms.readinghabittracker.service.AuthenticationService
-import com.huawei.agconnect.auth.AGConnectAuth
 import com.huawei.hms.support.hwid.HuaweiIdAuthManager
 import com.huawei.hms.support.hwid.request.HuaweiIdAuthParams
 import com.huawei.hms.support.hwid.request.HuaweiIdAuthParamsHelper
@@ -32,20 +30,5 @@ class AuthModule {
         huaweiIdAuthParams: HuaweiIdAuthParams
     ): HuaweiIdAuthService {
         return HuaweiIdAuthManager.getService(context, huaweiIdAuthParams)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAGConnectAuth(): AGConnectAuth {
-        return AGConnectAuth.getInstance()
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthenticationService(
-        huaweiIdAuthService: HuaweiIdAuthService,
-        agConnectAuth: AGConnectAuth
-    ): AuthenticationService {
-        return AuthenticationService(huaweiIdAuthService, agConnectAuth)
     }
 }
