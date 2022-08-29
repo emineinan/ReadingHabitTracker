@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * Definition of ObjectType Book.
  *
- * @since 2022-08-23
+ * @since 2022-08-29
  */
 @PrimaryKeys({"id"})
 public final class Book extends CloudDBZoneObject {
@@ -90,5 +90,4 @@ public final class Book extends CloudDBZoneObject {
     public Integer getCollectionId() {
         return collectionId;
     }
-
 }
