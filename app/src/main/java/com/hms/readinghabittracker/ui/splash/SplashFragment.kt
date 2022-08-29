@@ -10,6 +10,7 @@ import com.huawei.agconnect.auth.AGConnectAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SplashFragment :
@@ -17,12 +18,13 @@ class SplashFragment :
 
     override val viewModel: SplashViewModel by viewModels()
 
-    private val authInstance: AGConnectAuth by lazy { AGConnectAuth.getInstance() }
+    @Inject
+    lateinit var agConnect: AGConnectAuth
 
     override fun setupObserver() {
         lifecycleScope.launch {
             delay(4000)
-            if (authInstance.currentUser != null) {
+            if (agConnect.currentUser != null) {
                 findNavController().navigate(R.id.action_splashFragment_to_myBooksFragment)
             } else {
                 viewModel.isOnBoardingShowedFlow.collect {
