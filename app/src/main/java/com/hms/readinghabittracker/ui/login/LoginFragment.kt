@@ -29,7 +29,7 @@ class LoginFragment :
     private var signInWithHuaweiID =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                viewModel.userSignedIn(result.data)
+                viewModel.signInUserAndSaveToCloud(result.data)
             }
         }
 

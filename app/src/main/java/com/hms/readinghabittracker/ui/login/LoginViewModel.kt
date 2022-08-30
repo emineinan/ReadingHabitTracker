@@ -26,7 +26,7 @@ class LoginViewModel @Inject constructor(
     val loginUiState: StateFlow<LoginUiState> get() = _loginUiState.asStateFlow()
 
     @ExperimentalCoroutinesApi
-    fun userSignedIn(data: Intent?) {
+    fun signInUserAndSaveToCloud(data: Intent?) {
         authenticationRepository.signInUserToAgcConnect(
             data,
             object : IServiceListener<AGConnectUser> {
