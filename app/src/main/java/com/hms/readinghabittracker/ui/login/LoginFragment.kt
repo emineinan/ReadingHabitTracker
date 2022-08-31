@@ -13,7 +13,6 @@ import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.FragmentLoginBinding
 import com.huawei.hms.support.hwid.service.HuaweiIdAuthService
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,7 +24,6 @@ class LoginFragment :
     @Inject
     lateinit var service: HuaweiIdAuthService
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private var signInWithHuaweiID =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -38,7 +36,6 @@ class LoginFragment :
             signInWithHuaweiID.launch(service.signInIntent)
         }
     }
-
 
     override fun setupObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
