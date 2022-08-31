@@ -9,7 +9,6 @@ import com.hms.readinghabittracker.listener.IServiceListener
 import com.hms.readinghabittracker.utils.Resource
 import com.huawei.agconnect.auth.AGConnectUser
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,7 +24,6 @@ class LoginViewModel @Inject constructor(
     private val _loginUiState = MutableStateFlow(LoginUiState.initial())
     val loginUiState: StateFlow<LoginUiState> get() = _loginUiState.asStateFlow()
 
-    @ExperimentalCoroutinesApi
     fun signInUserAndSaveToCloud(data: Intent?) {
         authenticationRepository.signInUserToAgcConnect(
             data,
@@ -40,7 +38,6 @@ class LoginViewModel @Inject constructor(
             })
     }
 
-    @ExperimentalCoroutinesApi
     fun saveUserToCloudDb(
         agcUser: AGConnectUser
     ) {
