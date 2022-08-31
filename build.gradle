@@ -6,7 +6,7 @@ buildscript {
         classpath 'com.huawei.agconnect:agcp:1.7.0.300'
 
         // SafeArgs
-        def nav_version ="2.5.0"
+        def nav_version ="2.5.1"
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
 
         // Hilt
