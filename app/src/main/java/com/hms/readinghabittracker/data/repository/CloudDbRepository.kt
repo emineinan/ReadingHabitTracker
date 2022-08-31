@@ -4,10 +4,7 @@ import android.util.Log
 import com.hms.readinghabittracker.data.model.User
 import com.hms.readinghabittracker.utils.Resource
 import com.hms.readinghabittracker.utils.helper.ObjectTypeInfoHelper
-import com.huawei.agconnect.cloud.database.AGConnectCloudDB
-import com.huawei.agconnect.cloud.database.CloudDBZone
-import com.huawei.agconnect.cloud.database.CloudDBZoneConfig
-import com.huawei.agconnect.cloud.database.CloudDBZoneObject
+import com.huawei.agconnect.cloud.database.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
@@ -83,6 +80,40 @@ class CloudDbRepository @Inject constructor(
             }
 
         }.flowOn(Dispatchers.IO)
+
+    fun checkUserById(uid: Long): Flow<Resource<Boolean>> =
+        callbackFlow {
+            if (cloudDBZone == null) {
+                Log.d(TAG, "Cloud DB Zone is null, try re-open it")
+                send(Resource.Error(Exception(("Something went wrong please try again later"))))
+                close()
+                return@callbackFlow
+            }
+
+            trySend(Resource.Loading)
+
+            val query = CloudDBZoneQuery.where(User::class.java).equalTo("id", uid)
+            val queryTask = cloudDBZone?.executeQuery(
+                query,
+                CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_DEFAULT
+            )
+
+            queryTask?.addOnSuccessListener {
+                val isUserExist = it.snapshotObjects.size() > 0
+                if (isUserExist) {
+                    trySend(Resource.Success(true))
+                } else {
+                    trySend(Resource.Success(false))
+                }
+            }?.addOnFailureListener {
+                trySend(Resource.Error(Exception(("Something went wrong please try again later"))))
+            }
+            awaitClose {
+                queryTask?.addOnSuccessListener(null)
+                queryTask?.addOnFailureListener(null)
+                channel.close()
+            }
+        }
 
     private fun isDbOpen(): Boolean = cloudDBZone != null
 

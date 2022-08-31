@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hms.readinghabittracker.data.model.User
 import com.hms.readinghabittracker.data.repository.AuthenticationRepository
+import com.hms.readinghabittracker.data.repository.CloudDbRepository
 import com.hms.readinghabittracker.listener.IServiceListener
 import com.hms.readinghabittracker.utils.Resource
 import com.huawei.agconnect.auth.AGConnectUser
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authenticationRepository: AuthenticationRepository
+    private val authenticationRepository: AuthenticationRepository,
+    private val cloudDbRepository: CloudDbRepository
 ) : ViewModel() {
 
     private val _loginUiState = MutableStateFlow(LoginUiState.initial())
@@ -29,7 +31,7 @@ class LoginViewModel @Inject constructor(
             data,
             object : IServiceListener<AGConnectUser> {
                 override fun onSuccess(successResult: AGConnectUser) {
-                    saveUserToCloudDb(successResult)
+                    checkUserByIdAndSaveUserToCloudDbIfNotExist(successResult)
                 }
 
                 override fun onError(exception: Exception) {
@@ -38,14 +40,26 @@ class LoginViewModel @Inject constructor(
             })
     }
 
-    fun saveUserToCloudDb(
+    fun checkUserByIdAndSaveUserToCloudDbIfNotExist(
         agcUser: AGConnectUser
     ) {
-        //Check user exist in the Cloud DB
-        // if (is user exist in CloudDb(agcUser.uid.toLong)){
-        // return
-        // }
+        viewModelScope.launch {
+            cloudDbRepository.checkUserById(agcUser.uid.toLong()).collect {
+                when (it) {
+                    is Resource.Loading -> setLoadingState()
+                    else -> {
+                        if (it is Resource.Success && it.data) {
+                            setUserSignedState()
+                        } else {
+                            saveUserToCloudDb(agcUser)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
+    private fun saveUserToCloudDb(agcUser: AGConnectUser) {
         val user = User(agcUser.uid.toLong(), agcUser.displayName)
 
         viewModelScope.launch {
