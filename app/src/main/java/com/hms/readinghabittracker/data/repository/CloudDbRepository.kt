@@ -25,9 +25,9 @@ class CloudDbRepository @Inject constructor(
     private val _cloudDbZoneFlow = MutableStateFlow(initialCloudDbZone)
     val cloudDbZoneFlow: StateFlow<CloudDBZone?> get() = _cloudDbZoneFlow.asStateFlow()
 
-    private val initialCloudDbUserResponseList: MutableList<User>? = null
+    private val initialCloudDbUserResponseList: MutableList<User> = mutableListOf()
     private val _cloudDbUserResponse = MutableStateFlow(initialCloudDbUserResponseList)
-    val cloudDbUserResponse: StateFlow<MutableList<User>?> get() = _cloudDbUserResponse.asStateFlow()
+    val cloudDbUserResponse: StateFlow<MutableList<User>> get() = _cloudDbUserResponse.asStateFlow()
 
     init {
         openDb()
@@ -66,21 +66,20 @@ class CloudDbRepository @Inject constructor(
                 close()
                 return@callbackFlow
             }
-
-            val upsertTask = cloudDBZone!!.executeUpsert(cloudDBZoneObject)
-            upsertTask.addOnSuccessListener { cloudDBZoneResult ->
+            val upsertTask = cloudDBZone?.executeUpsert(cloudDBZoneObject)
+            upsertTask?.addOnSuccessListener { cloudDBZoneResult ->
                 Log.i(TAG, "Upsert $cloudDBZoneResult records")
                 trySend(Resource.Success(true))
-            }.addOnFailureListener { exception ->
+            }?.addOnFailureListener { exception ->
                 trySend(Resource.Error(exception))
                 Log.i(TAG, exception.localizedMessage.orEmpty())
-            }.addOnCompleteListener {
+            }?.addOnCompleteListener {
                 close()
             }
             awaitClose {
-                upsertTask.addOnSuccessListener(null)
-                upsertTask.addOnFailureListener(null)
-                upsertTask.addOnCompleteListener(null)
+                upsertTask?.addOnSuccessListener(null)
+                upsertTask?.addOnFailureListener(null)
+                upsertTask?.addOnCompleteListener(null)
             }
 
         }.flowOn(Dispatchers.IO)
