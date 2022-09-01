@@ -9,7 +9,11 @@
         android:id="@+id/myBooksFragment"
         android:name="com.hms.readinghabittracker.ui.mybooks.MyBooksFragment"
         android:label="fragment_my_books"
-        tools:layout="@layout/fragment_my_books" />
+        tools:layout="@layout/fragment_my_books" >
+        <action
+            android:id="@+id/action_myBooksFragment_to_collectionsFragment"
+            app:destination="@id/collectionsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.hms.readinghabittracker.ui.login.LoginFragment"
@@ -58,4 +62,9 @@
         android:name="com.hms.readinghabittracker.ui.goals.GoalsFragment"
         android:label="fragment_goals"
         tools:layout="@layout/fragment_goals" />
+    <fragment
+        android:id="@+id/collectionsFragment"
+        android:name="com.hms.readinghabittracker.ui.collections.CollectionsFragment"
+        android:label="fragment_collections"
+        tools:layout="@layout/fragment_collections" />
 </navigation>

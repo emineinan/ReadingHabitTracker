@@ -10,7 +10,7 @@
     <string name="add_book">Add Book</string>
     <string name="collections">Collections</string>
     <string name="time">Time</string>
-    
+
     <!-- OnBoarding -->
     <string name="on_boarding_description1">Track Your Reading Time and Reading Habit</string>
     <string name="on_boarding_description2">Achieve Your Reading Goals</string>
@@ -18,5 +18,10 @@
 
     <!-- Permission -->
     <string name="location_permission">You need to allow location permissions to use this app.</string>
+
+    <!-- Collections -->
+    <string name="add_collection">Add Collection</string>
+    <string name="collection_name">Collection Name</string>
+    <string name="empty_field_warning">Please enter a collection name!</string>
 
 </resources>

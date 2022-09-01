@@ -4,6 +4,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.FragmentMyBooksBinding
@@ -28,7 +29,7 @@ class MyBooksFragment :
                 true
             }
             R.id.action_collections -> {
-                // Navigate to Collections Fragment
+                findNavController().navigate(R.id.action_myBooksFragment_to_collectionsFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)
