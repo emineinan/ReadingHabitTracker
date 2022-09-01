@@ -21,5 +21,7 @@
 
     <!-- Collections -->
     <string name="add_collection">Add Collection</string>
+    <string name="collection_name">Collection Name</string>
+    <string name="empty_field_warning">Please enter a collection name!</string>
 
 </resources>
