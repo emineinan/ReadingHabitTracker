@@ -23,8 +23,11 @@ public final class Collection extends CloudDBZoneObject {
 
     private Long userId;
 
-    public Collection() {
+    public Collection(Integer id, String name, Long userId) {
         super(Collection.class);
+        this.id = id;
+        this.name = name;
+        this.userId = userId;
     }
 
     public void setId(Integer id) {
