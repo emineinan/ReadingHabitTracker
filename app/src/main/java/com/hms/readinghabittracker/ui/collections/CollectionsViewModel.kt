@@ -22,7 +22,7 @@ class CollectionsViewModel @Inject constructor(private val cloudDbRepository: Cl
     val collectionsUiState: StateFlow<CollectionsUiState> get() = _collectionsUiState.asStateFlow()
 
     fun saveCollectionToCloudDb(agcUser: AGConnectAuth, collectionName: String) {
-        val id = System.currentTimeMillis().div(1000).toInt()
+        val id = System.currentTimeMillis()
         val collection = Collection(id, collectionName, agcUser.currentUser.uid.toLong())
 
         viewModelScope.launch {

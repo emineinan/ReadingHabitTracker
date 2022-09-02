@@ -13,28 +13,28 @@ import java.util.Date;
 /**
  * Definition of ObjectType Collection.
  *
- * @since 2022-08-29
+ * @since 2022-09-02
  */
 @PrimaryKeys({"id"})
 public final class Collection extends CloudDBZoneObject {
-    private Integer id;
+    private Long id;
 
     private String name;
 
     private Long userId;
 
-    public Collection(Integer id, String name, Long userId) {
+    public Collection(Long id, String name, Long userId) {
         super(Collection.class);
         this.id = id;
         this.name = name;
         this.userId = userId;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -53,4 +53,5 @@ public final class Collection extends CloudDBZoneObject {
     public Long getUserId() {
         return userId;
     }
+
 }
