@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.FragmentMyBooksBinding
+import com.hms.readinghabittracker.ui.mybooks.adapter.MyBooksAdapter
 
 class MyBooksFragment :
     BaseFragment<FragmentMyBooksBinding, MyBooksViewModel>(FragmentMyBooksBinding::inflate) {
@@ -16,6 +17,7 @@ class MyBooksFragment :
 
     override fun setupUi() {
         setHasOptionsMenu(true)
+        setRecyclerView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -34,5 +36,9 @@ class MyBooksFragment :
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun setRecyclerView() {
+        //binding.recyclerViewMyBooks.adapter = MyBooksAdapter(we need to our collections list)
     }
 }
