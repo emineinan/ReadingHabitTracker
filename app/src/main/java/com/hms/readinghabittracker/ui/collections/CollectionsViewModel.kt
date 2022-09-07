@@ -1,8 +1,10 @@
 package com.hms.readinghabittracker.ui.collections
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hms.readinghabittracker.data.model.Collection
+import com.hms.readinghabittracker.data.model.User
 import com.hms.readinghabittracker.data.repository.CloudDbRepository
 import com.hms.readinghabittracker.utils.Resource
 import com.huawei.agconnect.auth.AGConnectAuth
@@ -21,6 +23,10 @@ class CollectionsViewModel @Inject constructor(private val cloudDbRepository: Cl
     private val _collectionsUiState = MutableStateFlow(CollectionsUiState.initial())
     val collectionsUiState: StateFlow<CollectionsUiState> get() = _collectionsUiState.asStateFlow()
 
+    init {
+        getCollections()
+    }
+
     fun saveCollectionToCloudDb(agcUser: AGConnectAuth, collectionName: String) {
         val id = System.currentTimeMillis()
         val collection = Collection(id, collectionName, agcUser.currentUser.uid.toLong())
@@ -32,6 +38,20 @@ class CollectionsViewModel @Inject constructor(private val cloudDbRepository: Cl
                     is Resource.Loading -> setLoadingState()
                     is Resource.Success -> setSavedCollectionState()
                 }
+            }
+        }
+    }
+
+    private fun getCollections() {
+        cloudDbRepository.queryAllCollections()
+        viewModelScope.launch {
+            cloudDbRepository.cloudDbCollectionResponse.collect {
+                if(it.isNotEmpty()){
+                    _collectionsUiState.update { currentCollectionsUiState ->
+                        currentCollectionsUiState.copy(savedCollectionList = it)
+                    }
+                }
+
             }
         }
     }

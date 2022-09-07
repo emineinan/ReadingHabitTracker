@@ -1,12 +1,14 @@
 package com.hms.readinghabittracker.ui.collections
 
 import android.app.AlertDialog
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.AddCollectionDialogBinding
@@ -24,10 +26,15 @@ class CollectionsFragment :
     @Inject
     lateinit var agConnect: AGConnectAuth
 
+    private var collectionsAdapter = CollectionsAdapter()
+
     override fun setupUi() {
         binding.fabAddCollection.setOnClickListener {
             showAddCollectionDialog()
         }
+
+
+        setAdapter()
     }
 
     private fun showAddCollectionDialog() {
@@ -66,8 +73,20 @@ class CollectionsFragment :
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+                    if (collectionsUiState.savedCollectionList.isNotEmpty()) {
+                        collectionsUiState.savedCollectionList.let {
+                            collectionsAdapter.setCollectionList(it)
+                        }
+                    }
+
                 }
             }
         }
+    }
+
+    private fun setAdapter() {
+        binding.recyclerViewCollections.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewCollections.setHasFixedSize(true)
+        binding.recyclerViewCollections.adapter = collectionsAdapter
     }
 }
