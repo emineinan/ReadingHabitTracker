@@ -1,7 +1,6 @@
 package com.hms.readinghabittracker.ui.collections
 
 import android.app.AlertDialog
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -32,8 +31,6 @@ class CollectionsFragment :
         binding.fabAddCollection.setOnClickListener {
             showAddCollectionDialog()
         }
-
-
         setAdapter()
     }
 
@@ -78,7 +75,6 @@ class CollectionsFragment :
                             collectionsAdapter.setCollectionList(it)
                         }
                     }
-
                 }
             }
         }

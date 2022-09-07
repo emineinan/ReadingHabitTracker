@@ -1,10 +1,8 @@
 package com.hms.readinghabittracker.ui.collections
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hms.readinghabittracker.data.model.Collection
-import com.hms.readinghabittracker.data.model.User
 import com.hms.readinghabittracker.data.repository.CloudDbRepository
 import com.hms.readinghabittracker.utils.Resource
 import com.huawei.agconnect.auth.AGConnectAuth
