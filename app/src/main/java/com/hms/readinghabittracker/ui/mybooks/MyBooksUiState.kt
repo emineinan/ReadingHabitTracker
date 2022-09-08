@@ -1,16 +1,16 @@
 package com.hms.readinghabittracker.ui.mybooks
 
-import com.hms.readinghabittracker.data.model.Collection
+import com.hms.readinghabittracker.data.model.CollectionUIModel
 
 data class MyBooksUiState(
     val loading: Boolean,
-    val savedMyBookList: List<Collection>,
-    val error: List<String>
+    val collectionsAndBooks: List<CollectionUIModel>,
+    val error: List<String>,
 ) {
     companion object {
         fun initial() = MyBooksUiState(
             loading = false,
-            savedMyBookList = emptyList(),
+            collectionsAndBooks = emptyList(),
             error = emptyList()
         )
     }

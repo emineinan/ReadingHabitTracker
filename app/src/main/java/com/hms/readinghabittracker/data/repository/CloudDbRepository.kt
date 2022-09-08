@@ -8,20 +8,29 @@ import com.hms.readinghabittracker.data.model.User
 import com.hms.readinghabittracker.utils.Resource
 import com.hms.readinghabittracker.utils.helper.ObjectTypeInfoHelper
 import com.huawei.agconnect.auth.AGConnectAuth
-import com.huawei.agconnect.cloud.database.*
+import com.huawei.agconnect.cloud.database.AGConnectCloudDB
+import com.huawei.agconnect.cloud.database.CloudDBZone
+import com.huawei.agconnect.cloud.database.CloudDBZoneConfig
+import com.huawei.agconnect.cloud.database.CloudDBZoneObject
+import com.huawei.agconnect.cloud.database.CloudDBZoneQuery
 import com.huawei.agconnect.cloud.database.exceptions.AGConnectCloudDBException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.zip
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class CloudDbRepository @Inject constructor(
     private val cloudDB: AGConnectCloudDB,
-    private val agConnectAuth: AGConnectAuth
+    private val agConnectAuth: AGConnectAuth,
 ) {
 
     private var cloudDBZone: CloudDBZone? = null
@@ -60,8 +69,10 @@ class CloudDbRepository @Inject constructor(
                     Log.i(TAG, "Open cloudDBZone success")
                     cloudDBZone = it
                     _cloudDbZoneFlow.value = it
-                    queryAllCollectionsForCurrentUser(agConnectAuth.currentUser.uid.toLong())
-                    queryAllCollectionsForCurrentUser(agConnectAuth.currentUser.uid.toLong())
+                    if (cloudDBZone != null && agConnectAuth.currentUser?.uid != null) {
+                        queryAllCollectionsForCurrentUser(agConnectAuth.currentUser.uid.toLong())
+                        queryAllCollectionsForCurrentUser(agConnectAuth.currentUser.uid.toLong())
+                    }
                 }
                 .addOnFailureListener {
                     Log.w(TAG, "Open cloudDBZone failed for " + it.message)
@@ -135,7 +146,7 @@ class CloudDbRepository @Inject constructor(
 
     fun queryAllCollectionsForCurrentUser(uid: Long): Flow<Resource<List<Collection>>> =
         callbackFlow {
-            if (cloudDBZone == null) {
+            if (cloudDBZone == null || agConnectAuth.currentUser.uid == null) {
                 Log.w("COLLECTION", "CloudDBZone is null, try re-open it")
                 send(Resource.Error(Exception(("Something went wrong please try again later"))))
                 close()
@@ -179,7 +190,7 @@ class CloudDbRepository @Inject constructor(
 
     fun queryAllBooksForCurrentUser(uid: Long): Flow<Resource<List<Book>>> =
         callbackFlow {
-            if (cloudDBZone == null) {
+            if (cloudDBZone == null || agConnectAuth.currentUser.uid == null) {
                 Log.w("COLLECTION", "CloudDBZone is null, try re-open it")
                 send(Resource.Error(Exception(("Something went wrong please try again later"))))
                 close()
@@ -221,30 +232,45 @@ class CloudDbRepository @Inject constructor(
         }
 
 
-  /* fun getCollectionsForCurrentUser(uid: Long): MutableList<CollectionUIModel> {
+    fun getCollectionsForCurrentUser(uid: Long): Flow<Resource<List<CollectionUIModel>>> = flow {
         val collectionsList = mutableListOf<CollectionUIModel>()
 
         val currentUserBooks = queryAllBooksForCurrentUser(uid)
         val currentUserCollections = queryAllCollectionsForCurrentUser(uid)
 
+        currentUserCollections.zip(currentUserBooks) { collectionsResult, booksResult ->
+            when (collectionsResult) {
+                is Resource.Loading -> emit(Resource.Loading)
+                is Resource.Error -> emit(Resource.Error(collectionsResult.exception))
+                is Resource.Success -> {
 
-        currentUserCollections.zip(currentUserBooks) { collections, books ->
-            collections.forEach { collection ->
-                val allBooksInTheCurrentCollection =
-                    books.filter { it.collectionId == collection.id }
-                val collectionUIModel =
-                    CollectionUIModel(
-                        collection.id,
-                        collection.name,
-                        allBooksInTheCurrentCollection
-                    )
-                collectionsList.add(collectionUIModel)
+                    when (booksResult) {
+                        is Resource.Loading -> emit(Resource.Loading)
+                        is Resource.Error -> emit(Resource.Error(booksResult.exception))
+                        is Resource.Success -> {
+
+                            val collections = collectionsResult.data
+                            val books = booksResult.data
+
+                            collections.forEach { collection ->
+
+                                val allBooksInTheCurrentCollection =
+                                    books.filter { it.collectionId == collection.id }
+                                val collectionUIModel =
+                                    CollectionUIModel(
+                                        collection.id,
+                                        collection.name,
+                                        allBooksInTheCurrentCollection
+                                    )
+                                collectionsList.add(collectionUIModel)
+                            }
+                            emit(Resource.Success(collectionsList))
+                        }
+                    }
+                }
             }
         }
-
-        return collectionsList
-    }*/
-
+    }
 
     private fun isDbOpen(): Boolean = cloudDBZone != null
 

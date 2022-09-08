@@ -2,24 +2,26 @@ package com.hms.readinghabittracker.ui.mybooks
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hms.readinghabittracker.data.model.Book
 import com.hms.readinghabittracker.data.model.CollectionUIModel
 import com.hms.readinghabittracker.data.repository.CloudDbRepository
-import com.hms.readinghabittracker.ui.collections.CollectionsUiState
 import com.hms.readinghabittracker.utils.Resource
 import com.huawei.agconnect.auth.AGConnectAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MyBooksViewModel @Inject constructor(
     private val cloudDbRepository: CloudDbRepository,
-    agcUser: AGConnectAuth
+    agcUser: AGConnectAuth,
 ) :
     ViewModel() {
 
+    private val userId = agcUser.currentUser.uid.toLong()
     private val _myBooksUiState = MutableStateFlow(MyBooksUiState.initial())
     val myBooksUiState: StateFlow<MyBooksUiState> get() = _myBooksUiState.asStateFlow()
 
@@ -30,47 +32,30 @@ class MyBooksViewModel @Inject constructor(
     private val currentUserCollections =
         cloudDbRepository.queryAllCollectionsForCurrentUser(agcUser.currentUser.uid.toLong())
 
-    init {
-        getCollections()
-    }
 
-    private fun getCollections(): MutableList<CollectionUIModel> {
+    private fun getCollectionsForCurrentUser() {
         viewModelScope.launch {
-          currentUserCollections.collect{
-           when(it){
-               is Resource.Loading -> setLoadingState()
-               is Resource.Error -> setErrorState(it.exception)
-               is Resource.Success -> getMyBooks(currentUserBooks)
-           }
-          }
-        }
-
-        return collectionsList
-    }
-
-    private fun getMyBooks(currentUserBooks: Flow<Resource<List<Book>>>) {
-       viewModelScope.launch {
-           currentUserBooks.collect {
-               when (it) {
-                   is Resource.Error -> setErrorState(it.exception)
-                   is Resource.Loading -> setLoadingState()
-                   is Resource.Success -> setSavedMyBooksState()
-               }
-           }
-       }
-    }
-
-    private fun setSavedMyBooksState() {
-        currentUserCollections.zip(currentUserBooks) { collections, books ->
-          //Filter operations
-        }
-
-
-        _myBooksUiState.update { currentMyBooksUiState ->
-            currentMyBooksUiState.copy(savedMyBookList = currentMyBooksUiState.savedMyBookList)
+            cloudDbRepository.getCollectionsForCurrentUser(userId).collect {
+                when (it) {
+                    is Resource.Error -> setErrorState(it.exception)
+                    is Resource.Loading -> setLoadingState()
+                    is Resource.Success -> {
+                        setCollectionsWithBooks(it.data)
+                    }
+                }
+            }
         }
     }
 
+    private fun setCollectionsWithBooks(collectionsAndBooks: List<CollectionUIModel>) {
+        _myBooksUiState.update {
+            it.copy(
+                loading = false,
+                error = emptyList(),
+                collectionsAndBooks = collectionsAndBooks
+            )
+        }
+    }
 
     private fun setErrorState(exception: Exception) {
         _myBooksUiState.update { currentMyBooksUiState ->

@@ -13,11 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
-import com.hms.readinghabittracker.data.model.Collection
-import com.hms.readinghabittracker.data.model.CollectionUIModel
-import com.hms.readinghabittracker.data.repository.CloudDbRepository
 import com.hms.readinghabittracker.databinding.FragmentMyBooksBinding
-import com.hms.readinghabittracker.ui.collections.CollectionsAdapter
 import com.hms.readinghabittracker.ui.mybooks.adapter.MyBooksAdapter
 import com.huawei.agconnect.auth.AGConnectAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,9 +66,10 @@ class MyBooksFragment() :
                         ).show()
                     }
 
-                    if (myBooksUiState.savedMyBookList.isNotEmpty()) {
-                        myBooksUiState.savedMyBookList.let {
-                            //myBooksAdapter.setCollectionList(it)  // it want collectionUiModel list
+                    if (myBooksUiState.collectionsAndBooks.isNotEmpty()) {
+                        myBooksUiState.collectionsAndBooks.let {
+                            Log.d("CollectionsAndBooks", it.toString())
+                            myBooksAdapter.setCollectionList(it)  // it want collectionUiModel list
                         }
                     }
                 }
