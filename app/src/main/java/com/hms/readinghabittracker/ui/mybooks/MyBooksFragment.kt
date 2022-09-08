@@ -34,6 +34,7 @@ class MyBooksFragment() :
     override fun setupUi() {
         setHasOptionsMenu(true)
         setAdapter()
+        viewModel.getCollectionsForCurrentUser()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -58,10 +59,10 @@ class MyBooksFragment() :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.myBooksUiState.collect { myBooksUiState ->
-                    myBooksUiState.error.firstOrNull()?.let {
+                    myBooksUiState.loading.let {
                         Toast.makeText(
                             requireContext(),
-                            "My books is not display, there is an error...",
+                            "Books are loading...",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -69,7 +70,7 @@ class MyBooksFragment() :
                     if (myBooksUiState.collectionsAndBooks.isNotEmpty()) {
                         myBooksUiState.collectionsAndBooks.let {
                             Log.d("CollectionsAndBooks", it.toString())
-                            myBooksAdapter.setCollectionList(it)  // it want collectionUiModel list
+                            myBooksAdapter.setCollectionList(it)
                         }
                     }
                 }
@@ -77,11 +78,14 @@ class MyBooksFragment() :
         }
     }
 
-
     private fun setAdapter() {
         binding.recyclerViewMyBooks.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewMyBooks.setHasFixedSize(true)
         binding.recyclerViewMyBooks.adapter = myBooksAdapter
-        //myBooksAdapter.setCollectionList(cloudDbRepository.getCollectionsForCurrentUser(agConnect.currentUser.uid.toLong()))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCollectionsForCurrentUser()
     }
 }

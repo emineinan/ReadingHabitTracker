@@ -26,7 +26,9 @@ class BookAdapter(private val books: List<Book>) :  //Child Adapter
         holder.binding.apply {
             val book = books[position]
             textViewBookTitle.text = book.title
-            Glide.with(root).load(book.photo).into(imageViewBook)
+            Glide.with(root)
+                .load("https://img.kitapyurdu.com/v1/getImage/fn:148055/wh:true/wi:800")
+                .into(imageViewBook)
         }
     }
 

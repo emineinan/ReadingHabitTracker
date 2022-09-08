@@ -1,5 +1,6 @@
 package com.hms.readinghabittracker.ui.mybooks
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hms.readinghabittracker.data.model.CollectionUIModel
@@ -25,15 +26,14 @@ class MyBooksViewModel @Inject constructor(
     private val _myBooksUiState = MutableStateFlow(MyBooksUiState.initial())
     val myBooksUiState: StateFlow<MyBooksUiState> get() = _myBooksUiState.asStateFlow()
 
-    private val collectionsList = mutableListOf<CollectionUIModel>()
+    init {
+        getCollectionsForCurrentUser()
+        Log.e("COLLECTION Viewmodel", "queryAllCollectionsForCurrentUser ViewModel cagrildi.")
+        Log.e("COLLECTION Viewmodel USERID", userId.toString())
+    }
 
-    private val currentUserBooks =
-        cloudDbRepository.queryAllBooksForCurrentUser(agcUser.currentUser.uid.toLong())
-    private val currentUserCollections =
-        cloudDbRepository.queryAllCollectionsForCurrentUser(agcUser.currentUser.uid.toLong())
 
-
-    private fun getCollectionsForCurrentUser() {
+    fun getCollectionsForCurrentUser() {
         viewModelScope.launch {
             cloudDbRepository.getCollectionsForCurrentUser(userId).collect {
                 when (it) {
@@ -41,6 +41,7 @@ class MyBooksViewModel @Inject constructor(
                     is Resource.Loading -> setLoadingState()
                     is Resource.Success -> {
                         setCollectionsWithBooks(it.data)
+                        Log.e("COLLECTION", "ViewModel Resource.Success ${it.data}")
                     }
                 }
             }

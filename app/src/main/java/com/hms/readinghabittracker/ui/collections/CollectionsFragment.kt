@@ -85,4 +85,9 @@ class CollectionsFragment :
         binding.recyclerViewCollections.setHasFixedSize(true)
         binding.recyclerViewCollections.adapter = collectionsAdapter
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCollections(agConnect)
+    }
 }

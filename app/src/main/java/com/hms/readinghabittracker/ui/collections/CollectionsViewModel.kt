@@ -29,7 +29,7 @@ class CollectionsViewModel @Inject constructor(
     }
 
 
-    private fun getCollections(agcUser: AGConnectAuth) {
+    fun getCollections(agcUser: AGConnectAuth) {
         cloudDbRepository.queryAllCollectionsForCurrentUser(agcUser.currentUser.uid.toLong())
         viewModelScope.launch {
             cloudDbRepository.cloudDbCollectionResponse.collect {
