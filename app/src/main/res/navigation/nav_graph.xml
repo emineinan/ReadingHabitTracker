@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_myBooksFragment_to_collectionsFragment"
             app:destination="@id/collectionsFragment" />
+        <action
+            android:id="@+id/action_myBooksFragment_to_addBookFragment"
+            app:destination="@id/addBookFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -67,4 +70,13 @@
         android:name="com.hms.readinghabittracker.ui.collections.CollectionsFragment"
         android:label="fragment_collections"
         tools:layout="@layout/fragment_collections" />
+    <fragment
+        android:id="@+id/addBookFragment"
+        android:name="com.hms.readinghabittracker.ui.addingbook.AddBookFragment"
+        android:label="fragment_add_book"
+        tools:layout="@layout/fragment_add_book" >
+        <argument
+            android:name="collectionName"
+            app:argType="string" />
+    </fragment>
 </navigation>

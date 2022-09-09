@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.data.model.Collection
 import com.hms.readinghabittracker.data.model.CollectionUIModel
 import com.hms.readinghabittracker.databinding.MyBooksItemBinding
+import com.hms.readinghabittracker.ui.mybooks.MyBooksFragmentDirections
 
 class MyBooksAdapter() :  //Parent Adapter
     RecyclerView.Adapter<MyBooksAdapter.MyBooksViewHolder>() {
@@ -30,6 +33,11 @@ class MyBooksAdapter() :  //Parent Adapter
             textViewCollectionName.text = collection.name
             val booksAdapter = BookAdapter(collection.books)
             recyclerViewBooks.adapter = booksAdapter
+            imageViewAdd.setOnClickListener {
+                val action =
+                    MyBooksFragmentDirections.actionMyBooksFragmentToAddBookFragment(collection.name)
+                findNavController(imageViewAdd).navigate(action)
+            }
         }
     }
 
