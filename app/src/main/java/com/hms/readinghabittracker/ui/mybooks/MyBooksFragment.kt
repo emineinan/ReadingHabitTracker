@@ -4,7 +4,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -55,13 +55,7 @@ class MyBooksFragment() :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.myBooksUiState.collect { myBooksUiState ->
-                    myBooksUiState.loading.let {
-                        Toast.makeText(
-                            requireContext(),
-                            "Books are loading...",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                    binding.loadingBar.isVisible = myBooksUiState.loading
 
                     if (myBooksUiState.collectionsAndBooks.isNotEmpty()) {
                         myBooksUiState.collectionsAndBooks.let {
