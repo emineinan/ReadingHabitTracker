@@ -43,10 +43,6 @@ class MyBooksFragment() :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_add -> {
-                // Navigate to Add Book Fragment
-                true
-            }
             R.id.action_collections -> {
                 findNavController().navigate(R.id.action_myBooksFragment_to_collectionsFragment)
                 true

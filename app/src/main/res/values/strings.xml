@@ -25,4 +25,10 @@
     <string name="my_books">My Books</string>
     <string name="add_book">Add Book</string>
 
+    <!-- Add Book-->
+    <string name="book_title">Book Title</string>
+    <string name="book_author">Book Author</string>
+    <string name="no_of_pages">No of Pages</string>
+    <string name="save_book">Save Book</string>
+
 </resources>
