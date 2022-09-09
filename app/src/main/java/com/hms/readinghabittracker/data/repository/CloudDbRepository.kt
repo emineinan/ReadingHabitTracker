@@ -1,21 +1,30 @@
 package com.hms.readinghabittracker.data.repository
 
 import android.util.Log
+import com.hms.readinghabittracker.data.model.Book
 import com.hms.readinghabittracker.data.model.Collection
+import com.hms.readinghabittracker.data.model.CollectionUIModel
 import com.hms.readinghabittracker.data.model.User
 import com.hms.readinghabittracker.utils.Resource
 import com.hms.readinghabittracker.utils.helper.ObjectTypeInfoHelper
-import com.huawei.agconnect.cloud.database.*
+import com.huawei.agconnect.auth.AGConnectAuth
+import com.huawei.agconnect.cloud.database.AGConnectCloudDB
+import com.huawei.agconnect.cloud.database.CloudDBZone
+import com.huawei.agconnect.cloud.database.CloudDBZoneConfig
+import com.huawei.agconnect.cloud.database.CloudDBZoneObject
+import com.huawei.agconnect.cloud.database.CloudDBZoneQuery
 import com.huawei.agconnect.cloud.database.exceptions.AGConnectCloudDBException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class CloudDbRepository @Inject constructor(
-    private val cloudDB: AGConnectCloudDB
+    private val cloudDB: AGConnectCloudDB,
+    private val agConnectAuth: AGConnectAuth,
 ) {
 
     private var cloudDBZone: CloudDBZone? = null
@@ -31,6 +40,10 @@ class CloudDbRepository @Inject constructor(
     private val initialCloudDbCollectionResponseList: MutableList<Collection> = mutableListOf()
     private val _cloudDbCollectionResponse = MutableStateFlow(initialCloudDbCollectionResponseList)
     val cloudDbCollectionResponse: StateFlow<MutableList<Collection>> get() = _cloudDbCollectionResponse.asStateFlow()
+
+    private val initialCloudDbBookResponseList: MutableList<Book> = mutableListOf()
+    private val _cloudDbBookResponse = MutableStateFlow(initialCloudDbBookResponseList)
+    val cloudDbBookResponse: StateFlow<MutableList<Book>> get() = _cloudDbBookResponse.asStateFlow()
 
     init {
         openDb()
@@ -50,7 +63,6 @@ class CloudDbRepository @Inject constructor(
                     Log.i(TAG, "Open cloudDBZone success")
                     cloudDBZone = it
                     _cloudDbZoneFlow.value = it
-                    queryAllCollections()
                 }
                 .addOnFailureListener {
                     Log.w(TAG, "Open cloudDBZone failed for " + it.message)
@@ -122,25 +134,23 @@ class CloudDbRepository @Inject constructor(
             }
         }
 
-    fun getCollectionItems(): Flow<Resource<Boolean>> =
+    fun queryAllCollectionsForCurrentUser(uid: Long): Flow<Resource<List<Collection>>> =
         callbackFlow {
-            if (cloudDBZone == null) {
-                Log.d(TAG, "Cloud DB Zone is null, try re-open it")
+            if (cloudDBZone == null || agConnectAuth.currentUser.uid == null) {
                 send(Resource.Error(Exception(("Something went wrong please try again later"))))
                 close()
                 return@callbackFlow
             }
-
             trySend(Resource.Loading)
 
-            val query = CloudDBZoneQuery.where(Collection::class.java)
+            val query = CloudDBZoneQuery.where(Collection::class.java).equalTo("userId", uid)
             val queryTask = cloudDBZone?.executeQuery(
                 query,
                 CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_DEFAULT
             )
 
-            queryTask?.addOnSuccessListener {
-                val collectionInfoCursor = it.snapshotObjects
+            queryTask?.addOnSuccessListener { snapshot ->
+                val collectionInfoCursor = snapshot.snapshotObjects
                 val collectionInfoList: MutableList<Collection> = ArrayList()
                 try {
                     while (collectionInfoCursor.hasNext()) {
@@ -150,23 +160,58 @@ class CloudDbRepository @Inject constructor(
                 } catch (e: AGConnectCloudDBException) {
                     Log.w(TAG, "processQueryResult: " + e.message)
                 } finally {
-                    it.release()
+                    snapshot.release()
                 }
                 _cloudDbCollectionResponse.value = collectionInfoList
-
-
-                val isCollectionExist = it.snapshotObjects.size() > 0
-                Log.e("COLLECTION", it.snapshotObjects.size().toString())
-                Log.e("COLLECTION", it.snapshotObjects[0].name)
-                Log.e("COLLECTION", it.snapshotObjects[1].name)
-                if (isCollectionExist) {
-                    trySend(Resource.Success(true))
-                } else {
-                    trySend(Resource.Success(false))
-                }
-            }?.addOnFailureListener {
-                trySend(Resource.Error(Exception(("Something went wrong please try again later"))))
+                trySend(Resource.Success(collectionInfoList))
+                Log.e(TAG, "Query is success.")
             }
+                ?.addOnFailureListener {
+                    trySend(Resource.Error(Exception(("Something went wrong please try again later"))))
+                }
+            awaitClose {
+                queryTask?.addOnSuccessListener(null)
+                queryTask?.addOnFailureListener(null)
+                channel.close()
+            }
+        }
+
+    private fun queryAllBooksForCurrentUser(uid: Long): Flow<Resource<List<Book>>> =
+        callbackFlow {
+            if (cloudDBZone == null || agConnectAuth.currentUser.uid == null) {
+                Log.w("COLLECTION", "CloudDBZone is null, try re-open it")
+                send(Resource.Error(Exception(("Something went wrong please try again later"))))
+                close()
+                return@callbackFlow
+            }
+            trySend(Resource.Loading)
+
+            val query = CloudDBZoneQuery.where(Book::class.java).equalTo("userId", uid)
+            val queryTask = cloudDBZone?.executeQuery(
+                query,
+                CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_DEFAULT
+            )
+
+            queryTask?.addOnSuccessListener { snapshot ->
+                val bookInfoCursor = snapshot.snapshotObjects
+                val bookInfoList: MutableList<Book> = ArrayList()
+                try {
+                    while (bookInfoCursor.hasNext()) {
+                        val bookInfo = bookInfoCursor.next()
+                        bookInfoList.add(bookInfo)
+                    }
+                } catch (e: AGConnectCloudDBException) {
+                    Log.w(TAG, "processQueryResult: " + e.message)
+                } finally {
+                    snapshot.release()
+                }
+                _cloudDbBookResponse.value = bookInfoList
+                trySend(Resource.Success(bookInfoList))
+                Log.e(TAG, "Query is success.")
+            }
+                ?.addOnFailureListener {
+                    trySend(Resource.Error(Exception(("Something went wrong please try again later"))))
+                }
             awaitClose {
                 queryTask?.addOnSuccessListener(null)
                 queryTask?.addOnFailureListener(null)
@@ -175,44 +220,41 @@ class CloudDbRepository @Inject constructor(
         }
 
 
-    fun queryAllCollections() {
-        Log.e("COLLECTION REPO", "Query fonksiyonu cagrildi.")
-        if (cloudDBZone == null) {
-            Log.w("COLLECTION", "CloudDBZone is null, try re-open it")
-            return
-        }
+    fun getCollectionsForCurrentUser(uid: Long): Flow<Resource<List<CollectionUIModel>>> = flow {
+        val collectionsList = mutableListOf<CollectionUIModel>()
+        val currentUserCollections = queryAllCollectionsForCurrentUser(uid)
+        val currentUserBooks = queryAllBooksForCurrentUser(uid)
 
-        val query = CloudDBZoneQuery.where(Collection::class.java)
-        val queryTask = cloudDBZone?.executeQuery(
-            query,
-            CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_DEFAULT
-        )
-
-        queryTask?.addOnSuccessListener { snapshot ->
-            processQueryResult(snapshot)
-            Log.e("COLLECTION REPO", "Query is success.")
-        }
-            ?.addOnFailureListener {
-                Log.e("COLLECTION REPO", "Query failed.")
+        currentUserCollections.collect { collectionsResult ->
+            when (collectionsResult) {
+                is Resource.Loading -> emit(Resource.Loading)
+                is Resource.Error -> emit(Resource.Error(collectionsResult.exception))
+                is Resource.Success -> {
+                    currentUserBooks.collect { booksResult ->
+                        when (booksResult) {
+                            is Resource.Loading -> emit(Resource.Loading)
+                            is Resource.Error -> emit(Resource.Error(booksResult.exception))
+                            is Resource.Success -> {
+                                val collections = collectionsResult.data
+                                val books = booksResult.data
+                                collections.forEach { collection ->
+                                    val allBooksInTheCurrentCollection =
+                                        books.filter { it.collectionId == collection.id }
+                                    val collectionUIModel =
+                                        CollectionUIModel(
+                                            collection.id,
+                                            collection.name,
+                                            allBooksInTheCurrentCollection
+                                        )
+                                    collectionsList.add(collectionUIModel)
+                                }
+                                emit(Resource.Success(collectionsList))
+                            }
+                        }
+                    }
+                }
             }
-    }
-
-    private fun processQueryResult(snapshot: CloudDBZoneSnapshot<Collection>) {
-        Log.e("COLLECTION REPO", "processQueryResult fonksiyonu cagrildi.")
-        val collectionInfoCursor = snapshot.snapshotObjects
-        val collectionInfoList: MutableList<Collection> = ArrayList()
-        try {
-            while (collectionInfoCursor.hasNext()) {
-                val collectionInfo = collectionInfoCursor.next()
-                collectionInfoList.add(collectionInfo)
-            }
-            Log.e("COLLECTION REPO", "collectionInfoList Size: " + collectionInfoList.size.toString())
-        } catch (e: AGConnectCloudDBException) {
-            Log.w("COLLECTION REPO", "processQueryResult: " + e.message)
-        } finally {
-            snapshot.release()
         }
-        _cloudDbCollectionResponse.value = collectionInfoList
     }
 
     private fun isDbOpen(): Boolean = cloudDBZone != null
