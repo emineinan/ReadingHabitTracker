@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.data.model.Book
 import com.hms.readinghabittracker.databinding.BookItemBinding
+import com.hms.readinghabittracker.utils.extensions.loadImage
 
 class BookAdapter(private val books: List<Book>) :  //Child Adapter
     RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
@@ -26,9 +26,7 @@ class BookAdapter(private val books: List<Book>) :  //Child Adapter
         holder.binding.apply {
             val book = books[position]
             textViewBookTitle.text = book.title
-            Glide.with(root)
-                .load("https://img.kitapyurdu.com/v1/getImage/fn:148055/wh:true/wi:800")
-                .into(imageViewBook)
+            imageViewBook.loadImage(book.photo)
         }
     }
 
