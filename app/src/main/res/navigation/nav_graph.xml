@@ -78,5 +78,11 @@
         <argument
             android:name="collectionName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_addBookFragment_to_myBooksFragment"
+            app:destination="@id/myBooksFragment" />
+        <argument
+            android:name="collectionId"
+            app:argType="long" />
     </fragment>
 </navigation>
