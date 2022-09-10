@@ -1,6 +1,5 @@
 package com.hms.readinghabittracker.ui.mybooks
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hms.readinghabittracker.data.model.CollectionUIModel
@@ -28,8 +27,6 @@ class MyBooksViewModel @Inject constructor(
 
     init {
         getCollectionsForCurrentUser()
-        Log.e("COLLECTION Viewmodel", "queryAllCollectionsForCurrentUser ViewModel cagrildi.")
-        Log.e("COLLECTION Viewmodel USERID", userId.toString())
     }
 
 
@@ -41,7 +38,6 @@ class MyBooksViewModel @Inject constructor(
                     is Resource.Loading -> setLoadingState()
                     is Resource.Success -> {
                         setCollectionsWithBooks(it.data)
-                        Log.e("COLLECTION", "ViewModel Resource.Success ${it.data}")
                     }
                 }
             }
