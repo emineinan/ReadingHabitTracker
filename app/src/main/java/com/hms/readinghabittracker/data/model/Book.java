@@ -13,11 +13,11 @@ import java.util.Date;
 /**
  * Definition of ObjectType Book.
  *
- * @since 2022-09-02
+ * @since 2022-09-11
  */
 @PrimaryKeys({"id"})
 public final class Book extends CloudDBZoneObject {
-    private Integer id;
+    private Long id;
 
     private String title;
 
@@ -25,21 +25,28 @@ public final class Book extends CloudDBZoneObject {
 
     private Integer pages;
 
-    private String photo;
+    private byte[] image;
 
     private Long userId;
 
     private Long collectionId;
 
-    public Book() {
+    public Book(Long id, String title, String author, Integer pages, byte[] image, Long userId, Long collectionId) {
         super(Book.class);
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.image = image;
+        this.userId = userId;
+        this.collectionId = collectionId;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -67,12 +74,12 @@ public final class Book extends CloudDBZoneObject {
         return pages;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
-    public String getPhoto() {
-        return photo;
+    public byte[] getImage() {
+        return image;
     }
 
     public void setUserId(Long userId) {
