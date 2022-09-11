@@ -87,12 +87,23 @@
         <action
             android:id="@+id/action_addBookFragment_to_cropFragment"
             app:destination="@id/cropFragment" />
+        <action
+            android:id="@+id/action_addBookFragment_to_filterFragment"
+            app:destination="@id/filterFragment" />
     </fragment>
     <fragment
         android:id="@+id/cropFragment"
         android:name="com.hms.readinghabittracker.ui.editimage.crop.CropFragment"
         android:label="fragment_crop"
         tools:layout="@layout/fragment_crop">
+        <argument
+            android:name="image"
+            app:argType="android.graphics.Bitmap" />
+    </fragment>
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.hms.readinghabittracker.ui.editimage.filter.FilterFragment"
+        android:label="FilterFragment">
         <argument
             android:name="image"
             app:argType="android.graphics.Bitmap" />

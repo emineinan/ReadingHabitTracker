@@ -80,7 +80,14 @@ class AddBookFragment :
         }
 
         filterSelected.setOnClickListener {
-            // todo navigate Filter Fragment
+            if (viewModel.selectedBitmap.value != null) {
+                val action = AddBookFragmentDirections.actionAddBookFragmentToFilterFragment(
+                    viewModel.selectedBitmap.value!!
+                )
+                Navigation.findNavController(binding.root).navigate(action)
+            } else {
+                Toast.makeText(activity, "Upload an Image to continue", Toast.LENGTH_SHORT).show()
+            }
             builder.dismiss()
         }
     }
