@@ -13,12 +13,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.AddImageDialogBinding
+import com.hms.readinghabittracker.databinding.EditImageDialogBinding
 import com.hms.readinghabittracker.databinding.FragmentAddBookBinding
+import com.hms.readinghabittracker.utils.Constant
 import com.hms.readinghabittracker.utils.ImageUtils.convertBitmapToByteArray
 import com.hms.readinghabittracker.utils.PermissionUtils.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE
 import com.hms.readinghabittracker.utils.PermissionUtils.PERMISSION_REQUEST_CODE_CAMERA
@@ -42,12 +45,43 @@ class AddBookFragment :
     override fun setupUi() {
         binding.toolbarAddBook.title = args.collectionName
 
+        startListenBackStackEntry()
+
         binding.imageViewAddIcon.setOnClickListener {
             showAddBookImageDialog()
         }
 
         binding.buttonSaveBook.setOnClickListener {
             saveBook()
+        }
+
+        binding.imageViewEditImage.setOnClickListener {
+            showEditImageDialog()
+        }
+    }
+
+    private fun showEditImageDialog() {
+        val dialogBinding: EditImageDialogBinding =
+            EditImageDialogBinding.inflate(LayoutInflater.from(context))
+        val builder = AlertDialog.Builder(context).setView(dialogBinding.root).show()
+        val cropSelected = dialogBinding.textViewCrop
+        val filterSelected = dialogBinding.textViewFilter
+
+        cropSelected.setOnClickListener {
+            if (viewModel.selectedBitmap.value != null) {
+                val action = AddBookFragmentDirections.actionAddBookFragmentToCropFragment(
+                    viewModel.selectedBitmap.value!!
+                )
+                Navigation.findNavController(binding.root).navigate(action)
+            } else {
+                Toast.makeText(activity, "Upload an Image to continue", Toast.LENGTH_SHORT).show()
+            }
+            builder.dismiss()
+        }
+
+        filterSelected.setOnClickListener {
+            // todo navigate Filter Fragment
+            builder.dismiss()
         }
     }
 
@@ -99,6 +133,19 @@ class AddBookFragment :
         }
     }
 
+    private fun startListenBackStackEntry() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Bitmap>(
+            Constant.KEY_AVAILABILITY_CALENDAR_SHOULD_REFRESH.toString()
+        )
+            ?.observe(
+                viewLifecycleOwner
+            ) { resultImage ->
+                val image: Bitmap = resultImage
+                binding.imageViewBookPhoto.loadImage(image)
+                viewModel.setSelectedBitmap(image)
+            }
+    }
+
     private fun pickGallery() {
         val getPhotoIntent = Intent(Intent.ACTION_GET_CONTENT)
         val mimeTypes = arrayOf("image/jpg", "image/png", "image/jpeg")
@@ -128,6 +175,8 @@ class AddBookFragment :
         val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (activity?.packageManager?.let { it1 -> callCameraIntent.resolveActivity(it1) } != null) {
             startActivityForResult(callCameraIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE)
+            binding.imageViewAddIcon.visibility = View.INVISIBLE
+            binding.imageViewEditImage.visibility = View.VISIBLE
         }
     }
 
@@ -144,6 +193,7 @@ class AddBookFragment :
                         }
 
                         binding.imageViewAddIcon.visibility = View.INVISIBLE
+                        binding.imageViewEditImage.visibility = View.VISIBLE
 
                         if (uri != null) {
                             viewModel.setSelectedBitmap(
