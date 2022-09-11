@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/secondary_color_gray"
     tools:context=".ui.addingbook.AddBookFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -52,7 +53,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageViewBookPhoto"
                 app:layout_constraintStart_toStartOf="@+id/imageViewBookPhoto"
                 app:layout_constraintTop_toTopOf="@+id/imageViewBookPhoto"
-                app:tint="@color/purple_700" />
+                app:tint="@color/primary_color_dark" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -129,6 +130,6 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/cardView"
         app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:tint="@color/purple_700" />
+        app:tint="@color/primary_color_dark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

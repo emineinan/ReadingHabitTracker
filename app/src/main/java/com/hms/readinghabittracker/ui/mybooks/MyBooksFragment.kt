@@ -15,6 +15,7 @@ import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.FragmentMyBooksBinding
 import com.hms.readinghabittracker.ui.mybooks.adapter.MyBooksAdapter
+import com.hms.readinghabittracker.utils.extensions.setDivider
 import com.huawei.agconnect.auth.AGConnectAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -72,6 +73,7 @@ class MyBooksFragment() :
         binding.recyclerViewMyBooks.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewMyBooks.setHasFixedSize(true)
         binding.recyclerViewMyBooks.adapter = myBooksAdapter
+        binding.recyclerViewMyBooks.setDivider(R.drawable.recyclerview_divider)
     }
 
     override fun onResume() {

@@ -23,7 +23,7 @@ class SplashFragment :
 
     override fun setupObserver() {
         lifecycleScope.launch {
-            delay(4000)
+            delay(2000)
             if (agConnect.currentUser != null) {
                 findNavController().navigate(R.id.action_splashFragment_to_myBooksFragment)
             } else {
