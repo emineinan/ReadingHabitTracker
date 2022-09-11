@@ -30,5 +30,9 @@
     <string name="book_author">Book Author</string>
     <string name="no_of_pages">No of Pages</string>
     <string name="save_book">Save Book</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="add_book_image">Add Book Image</string>
+    <string name="add_book_warning">Please fill in the required fields.</string>
 
 </resources>
