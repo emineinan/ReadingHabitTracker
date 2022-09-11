@@ -20,12 +20,12 @@
     <string name="collection_name">Collection Name</string>
     <string name="empty_field_warning">Please enter a collection name!</string>
 
-    <!-- My Books-->
+    <!-- My Books -->
     <string name="book">Book</string>
     <string name="my_books">My Books</string>
     <string name="add_book">Add Book</string>
 
-    <!-- Add Book-->
+    <!-- Add Book -->
     <string name="book_title">Book Title</string>
     <string name="book_author">Book Author</string>
     <string name="no_of_pages">No of Pages</string>
@@ -34,5 +34,17 @@
     <string name="camera">Camera</string>
     <string name="add_book_image">Add Book Image</string>
     <string name="add_book_warning">Please fill in the required fields.</string>
+
+    <!-- Edit Image -->
+    <!-- Crop -->
+    <string name="edit_image">Edit Image</string>
+    <string name="crop_image">Crop Image</string>
+    <string name="apply_filter">Apply Filter</string>
+    <string name="flip_horizontally">Flip Horizontally</string>
+    <string name="flip_vertically">Flip Vertically</string>
+    <string name="rotate">Rotate</string>
+    <string name="done">Done</string>
+    <string name="circular">Circular</string>
+    <string name="rectangle">Rectangle</string>
 
 </resources>
