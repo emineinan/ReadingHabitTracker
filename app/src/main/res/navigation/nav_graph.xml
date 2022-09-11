@@ -9,7 +9,7 @@
         android:id="@+id/myBooksFragment"
         android:name="com.hms.readinghabittracker.ui.mybooks.MyBooksFragment"
         android:label="fragment_my_books"
-        tools:layout="@layout/fragment_my_books" >
+        tools:layout="@layout/fragment_my_books">
         <action
             android:id="@+id/action_myBooksFragment_to_collectionsFragment"
             app:destination="@id/collectionsFragment" />
@@ -74,7 +74,7 @@
         android:id="@+id/addBookFragment"
         android:name="com.hms.readinghabittracker.ui.addingbook.AddBookFragment"
         android:label="fragment_add_book"
-        tools:layout="@layout/fragment_add_book" >
+        tools:layout="@layout/fragment_add_book">
         <argument
             android:name="collectionName"
             app:argType="string" />
@@ -84,5 +84,17 @@
         <argument
             android:name="collectionId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_addBookFragment_to_cropFragment"
+            app:destination="@id/cropFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cropFragment"
+        android:name="com.hms.readinghabittracker.ui.editimage.crop.CropFragment"
+        android:label="fragment_crop"
+        tools:layout="@layout/fragment_crop">
+        <argument
+            android:name="image"
+            app:argType="android.graphics.Bitmap" />
     </fragment>
 </navigation>
