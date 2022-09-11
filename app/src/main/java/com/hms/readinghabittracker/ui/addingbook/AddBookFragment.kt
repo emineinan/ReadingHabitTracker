@@ -15,18 +15,17 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.AddImageDialogBinding
 import com.hms.readinghabittracker.databinding.FragmentAddBookBinding
-import com.hms.readinghabittracker.utils.Constants
-import com.hms.readinghabittracker.utils.Constants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE
-import com.hms.readinghabittracker.utils.Constants.REQUEST_PICK_IMAGE
+import com.hms.readinghabittracker.utils.ImageUtils.convertBitmapToByteArray
+import com.hms.readinghabittracker.utils.PermissionUtils.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE
+import com.hms.readinghabittracker.utils.PermissionUtils.PERMISSION_REQUEST_CODE_CAMERA
+import com.hms.readinghabittracker.utils.PermissionUtils.REQUEST_PICK_IMAGE
 import com.hms.readinghabittracker.utils.extensions.loadImage
 import com.huawei.agconnect.auth.AGConnectAuth
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -118,7 +117,7 @@ class AddBookFragment :
         ) {
             requestPermissions(
                 arrayOf(Manifest.permission.CAMERA),
-                Constants.PERMISSION_REQUEST_CODE_CAMERA
+                PERMISSION_REQUEST_CODE_CAMERA
             )
         } else {
             takePhoto()
@@ -166,29 +165,4 @@ class AddBookFragment :
             }
         }
     }
-
-    private fun convertBitmapToByteArray(bitmap: Bitmap): ByteArray {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(
-            Bitmap.CompressFormat.JPEG,
-            100,
-            byteArrayOutputStream
-        ) //Quality compression method, here 100 means no compression, store the compressed data in the BIOS
-        var options = 100
-        while (getImageSize(byteArrayOutputStream) > 500) {  //Cycle to determine if the compressed image is greater than 2Mb, greater than continue compression
-            byteArrayOutputStream.reset() //Reset the BIOS to clear it
-            //First parameter: picture format, second parameter: picture quality, 100 is the highest, 0 is the worst, third parameter: save the compressed data stream
-            bitmap.compress(
-                Bitmap.CompressFormat.JPEG,
-                options,
-                byteArrayOutputStream
-            ) //Here, the compression options are used to store the compressed data in the BIOS
-            options -= 10 //10 less each time
-        }
-        return byteArrayOutputStream.toByteArray()
-    }
-
-
-    private fun getImageSize(byteArrayOutputStream: ByteArrayOutputStream) =
-        byteArrayOutputStream.toByteArray().size / 1024
 }
