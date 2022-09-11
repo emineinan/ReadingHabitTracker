@@ -1,5 +1,8 @@
 package com.hms.readinghabittracker.ui.mybooks.adapter
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +11,7 @@ import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.data.model.Book
 import com.hms.readinghabittracker.databinding.BookItemBinding
 import com.hms.readinghabittracker.utils.extensions.loadImage
+
 
 class BookAdapter(private val books: List<Book>) :  //Child Adapter
     RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
@@ -26,9 +30,13 @@ class BookAdapter(private val books: List<Book>) :  //Child Adapter
         holder.binding.apply {
             val book = books[position]
             textViewBookTitle.text = book.title
-            imageViewBook.loadImage(book.photo)
+            imageViewBook.setImageBitmap(convertByteArrayToBitmap(book.image))
         }
     }
 
     override fun getItemCount() = books.size
+
+    private fun convertByteArrayToBitmap(byteArray: ByteArray): Bitmap {
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+    }
 }
