@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * Definition of ObjectType Collection.
  *
- * @since 2022-09-02
+ * @since 2022-09-11
  */
 @PrimaryKeys({"id"})
 public final class Collection extends CloudDBZoneObject {

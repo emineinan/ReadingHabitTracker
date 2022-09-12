@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.hms.readinghabittracker"
-        minSdk 24
+        minSdk 26
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -107,4 +107,7 @@ dependencies {
 
     // Huawei Awareness Kit
     implementation 'com.huawei.hms:awareness:3.1.0.302'
+
+    // Huawei Image Kit
+    implementation 'com.huawei.hms:image-vision:1.0.3.305'
 }

@@ -26,15 +26,15 @@ class OnBoardingFragment :
             listOf(
                 OnBoardingItem(
                     getString(R.string.on_boarding_description1),
-                    R.drawable.ic_timer
+                    R.raw.time
                 ),
                 OnBoardingItem(
                     getString(R.string.on_boarding_description2),
-                    R.drawable.ic_goal
+                    R.raw.focus
                 ),
                 OnBoardingItem(
                     getString(R.string.on_boarding_description3),
-                    R.drawable.ic_reader
+                    R.raw.book
                 )
             )
         )

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.data.model.Book
 import com.hms.readinghabittracker.databinding.BookItemBinding
-import com.hms.readinghabittracker.utils.extensions.loadImage
+import com.hms.readinghabittracker.utils.ImageUtils.convertByteArrayToBitmap
 
 class BookAdapter(private val books: List<Book>) :  //Child Adapter
     RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
@@ -26,7 +26,7 @@ class BookAdapter(private val books: List<Book>) :  //Child Adapter
         holder.binding.apply {
             val book = books[position]
             textViewBookTitle.text = book.title
-            imageViewBook.loadImage(book.photo)
+            imageViewBook.setImageBitmap(convertByteArrayToBitmap(book.image))
         }
     }
 

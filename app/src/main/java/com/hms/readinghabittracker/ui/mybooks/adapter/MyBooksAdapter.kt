@@ -4,11 +4,9 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.hms.readinghabittracker.R
-import com.hms.readinghabittracker.data.model.Collection
 import com.hms.readinghabittracker.data.model.CollectionUIModel
 import com.hms.readinghabittracker.databinding.MyBooksItemBinding
 import com.hms.readinghabittracker.ui.mybooks.MyBooksFragmentDirections
@@ -35,7 +33,10 @@ class MyBooksAdapter() :  //Parent Adapter
             recyclerViewBooks.adapter = booksAdapter
             imageViewAdd.setOnClickListener {
                 val action =
-                    MyBooksFragmentDirections.actionMyBooksFragmentToAddBookFragment(collection.name)
+                    MyBooksFragmentDirections.actionMyBooksFragmentToAddBookFragment(
+                        collection.name,
+                        collection.id
+                    )
                 findNavController(imageViewAdd).navigate(action)
             }
         }
