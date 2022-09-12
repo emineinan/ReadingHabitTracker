@@ -8,6 +8,7 @@ import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.FragmentGoalsBinding
 import com.hms.readinghabittracker.utils.PermissionUtils
 import com.hms.readinghabittracker.utils.TimeUtils
+import com.hms.readinghabittracker.utils.dialog.DaysDialog
 import com.huawei.hms.kit.awareness.Awareness
 import com.huawei.hms.kit.awareness.capture.TimeCategoriesResponse
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -18,9 +19,62 @@ class GoalsFragment :
     EasyPermissions.PermissionCallbacks {
 
     override val viewModel: GoalsViewModel by viewModels()
+    
+    val selectedDays: MutableList<Int> = ArrayList()
 
     override fun setupUi() {
         requestPermissions()
+
+        binding.buttonDays.setOnClickListener {
+            daysDialogCreate()
+        }
+        binding.buttonTime.setOnClickListener {
+
+        }
+        binding.buttonSaveGoals.setOnClickListener {
+
+        }
+    }
+
+    private fun daysDialogCreate() {
+        val customDialog = DaysDialog.getInstance(requireContext())
+            .setPositiveButton(
+                "Ok",
+                object : DaysDialog.ICustomDialogClickListener {
+                    override fun onClick() {
+                    }
+                }) {
+                binding.buttonDays.text = it.toString()
+                selectedDays.clear()
+                for(i in it){
+                    when (i) {
+                        "Sunday" -> {
+                            selectedDays.add(1)
+                        }
+                        "Monday" -> {
+                            selectedDays.add(2)
+                        }
+                        "Tuesday" -> {
+                            selectedDays.add(3)
+                        }
+                        "Wednesday" -> {
+                            selectedDays.add(4)
+                        }
+                        "Thursday" -> {
+                            selectedDays.add(5)
+                        }
+                        "Friday" -> {
+                            selectedDays.add(6)
+                        }
+                        "Saturday" -> {
+                            selectedDays.add(7)
+                        }
+                    }
+                }
+            }
+            .setCancelButton("Cancel")
+            .createDialog()
+        customDialog.showDialog()
     }
 
     private fun requestPermissions() {
