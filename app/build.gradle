@@ -110,5 +110,4 @@ dependencies {
 
     // Huawei Image Kit
     implementation 'com.huawei.hms:image-vision:1.0.3.305'
-    implementation 'com.huawei.hms:image-render:1.0.3.301'
 }
