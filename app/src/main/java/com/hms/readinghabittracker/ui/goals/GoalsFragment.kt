@@ -9,6 +9,7 @@ import com.hms.readinghabittracker.databinding.FragmentGoalsBinding
 import com.hms.readinghabittracker.utils.PermissionUtils
 import com.hms.readinghabittracker.utils.TimeUtils
 import com.hms.readinghabittracker.utils.dialog.DaysDialog
+import com.hms.readinghabittracker.utils.dialog.TimeDialog
 import com.huawei.hms.kit.awareness.Awareness
 import com.huawei.hms.kit.awareness.capture.TimeCategoriesResponse
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -19,8 +20,10 @@ class GoalsFragment :
     EasyPermissions.PermissionCallbacks {
 
     override val viewModel: GoalsViewModel by viewModels()
-    
+
     val selectedDays: MutableList<Int> = ArrayList()
+    var selectedHour: Int? = null
+    var selectedMinute: Int? = null
 
     override fun setupUi() {
         requestPermissions()
@@ -29,7 +32,7 @@ class GoalsFragment :
             daysDialogCreate()
         }
         binding.buttonTime.setOnClickListener {
-
+            timeDialogCreate()
         }
         binding.buttonSaveGoals.setOnClickListener {
 
@@ -46,7 +49,7 @@ class GoalsFragment :
                 }) {
                 binding.buttonDays.text = it.toString()
                 selectedDays.clear()
-                for(i in it){
+                for (i in it) {
                     when (i) {
                         "Sunday" -> {
                             selectedDays.add(1)
@@ -71,6 +74,23 @@ class GoalsFragment :
                         }
                     }
                 }
+            }
+            .setCancelButton("Cancel")
+            .createDialog()
+        customDialog.showDialog()
+    }
+
+    private fun timeDialogCreate() {
+        val customDialog = TimeDialog.getInstance(requireContext())
+            .setPositiveButton(
+                "Ok",
+                object : TimeDialog.ICustomDialogClickListener {
+                    override fun onClick() {
+                    }
+                }) {
+                binding.buttonTime.text = it[0].toString() + ":" + it[1].toString()
+                selectedHour = it[0]
+                selectedMinute = it[1]
             }
             .setCancelButton("Cancel")
             .createDialog()
