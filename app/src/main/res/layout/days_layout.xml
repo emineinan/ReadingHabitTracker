@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+
+    <TextView
+        android:id="@+id/tvDays"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/days"
+        android:textAlignment="center"
+        android:textColor="@color/primary_color_dark"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <CheckBox
+        android:id="@+id/checkBoxMonday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:buttonTint="#ED8C72"
+        android:text="Monday" />
+
+    <CheckBox
+        android:id="@+id/checkBoxTuesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:buttonTint="#ED8C72"
+        android:text="Tuesday" />
+
+    <CheckBox
+        android:id="@+id/checkBoxWednesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:buttonTint="#ED8C72"
+        android:text="Wednesday" />
+
+    <CheckBox
+        android:id="@+id/checkBoxThursday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:buttonTint="#ED8C72"
+        android:text="Thursday" />
+
+    <CheckBox
+        android:id="@+id/checkBoxFriday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:buttonTint="#ED8C72"
+        android:text="Friday" />
+
+    <CheckBox
+        android:id="@+id/checkBoxSaturday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:buttonTint="#ED8C72"
+        android:text="Saturday" />
+
+    <CheckBox
+        android:id="@+id/checkBoxSunday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:buttonTint="#ED8C72"
+        android:text="Sunday" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnCancelDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnOkDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="Ok"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</LinearLayout>
