@@ -2,8 +2,6 @@ package com.hms.readinghabittracker.utils.dialog
 
 import android.app.AlertDialog
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import com.hms.readinghabittracker.databinding.DaysLayoutBinding
@@ -29,7 +27,7 @@ class DaysDialog {
     }
 
     fun setCancelButton(negativeText: String): DaysDialog {
-        dialogBinding.btnCancelDays.apply {
+        dialogBinding.buttonCancelDays.apply {
             visibility = View.VISIBLE
             text = negativeText
             setOnClickListener { dismissDialog() }
@@ -42,7 +40,7 @@ class DaysDialog {
         onClickListener: ICustomDialogClickListener,
         resultList: (ArrayList<String>) -> Unit
     ): DaysDialog {
-        dialogBinding.btnOkDays.apply {
+        dialogBinding.buttonOkDays.apply {
             visibility = View.VISIBLE
             text = positiveText
             setOnClickListener {

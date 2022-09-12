@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp">
 
-
     <TextView
-        android:id="@+id/tvDays"
+        android:id="@+id/textViewDays"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/days"
@@ -22,56 +20,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:buttonTint="#ED8C72"
-        android:text="Monday" />
+        android:buttonTint="@color/secondary_color_dark"
+        android:text="@string/monday" />
 
     <CheckBox
         android:id="@+id/checkBoxTuesday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:buttonTint="#ED8C72"
-        android:text="Tuesday" />
+        android:buttonTint="@color/secondary_color_dark"
+        android:text="@string/tuesday" />
 
     <CheckBox
         android:id="@+id/checkBoxWednesday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:buttonTint="#ED8C72"
-        android:text="Wednesday" />
+        android:buttonTint="@color/secondary_color_dark"
+        android:text="@string/wednesday" />
 
     <CheckBox
         android:id="@+id/checkBoxThursday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:buttonTint="#ED8C72"
-        android:text="Thursday" />
+        android:buttonTint="@color/secondary_color_dark"
+        android:text="@string/thursday" />
 
     <CheckBox
         android:id="@+id/checkBoxFriday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:buttonTint="#ED8C72"
-        android:text="Friday" />
+        android:buttonTint="@color/secondary_color_dark"
+        android:text="@string/friday" />
 
     <CheckBox
         android:id="@+id/checkBoxSaturday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:buttonTint="#ED8C72"
-        android:text="Saturday" />
+        android:buttonTint="@color/secondary_color_dark"
+        android:text="@string/saturday" />
 
     <CheckBox
         android:id="@+id/checkBoxSunday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:buttonTint="#ED8C72"
-        android:text="Sunday" />
+        android:buttonTint="@color/secondary_color_dark"
+        android:text="@string/sunday" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -80,24 +78,27 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/btnCancelDays"
+            android:id="@+id/buttonCancelDays"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnOkDays"
+        <Button
+            android:id="@+id/buttonOkDays"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Ok"
+            android:text="@string/ok"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
     </LinearLayout>
+
 </LinearLayout>
