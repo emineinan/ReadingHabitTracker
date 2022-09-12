@@ -16,7 +16,12 @@ import com.huawei.agconnect.cloud.database.CloudDBZoneQuery
 import com.huawei.agconnect.cloud.database.exceptions.AGConnectCloudDBException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -136,43 +141,42 @@ class CloudDbRepository @Inject constructor(
 
     fun queryAllCollectionsForCurrentUser(uid: Long): Flow<Resource<List<Collection>>> =
         callbackFlow {
-            if (cloudDBZone == null || agConnectAuth.currentUser.uid == null) {
-                send(Resource.Error(Exception(("Something went wrong please try again later"))))
-                close()
-                return@callbackFlow
-            }
-            trySend(Resource.Loading)
+            _cloudDbZoneFlow.collect {
+                if (it != null) {
+                    trySend(Resource.Loading)
 
-            val query = CloudDBZoneQuery.where(Collection::class.java).equalTo("userId", uid)
-            val queryTask = cloudDBZone?.executeQuery(
-                query,
-                CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_DEFAULT
-            )
+                    val query = CloudDBZoneQuery.where(Collection::class.java).equalTo("userId", uid)
+                    val queryTask = cloudDBZone?.executeQuery(
+                        query,
+                        CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_DEFAULT
+                    )
 
-            queryTask?.addOnSuccessListener { snapshot ->
-                val collectionInfoCursor = snapshot.snapshotObjects
-                val collectionInfoList: MutableList<Collection> = ArrayList()
-                try {
-                    while (collectionInfoCursor.hasNext()) {
-                        val collectionInfo = collectionInfoCursor.next()
-                        collectionInfoList.add(collectionInfo)
+                    queryTask?.addOnSuccessListener { snapshot ->
+                        val collectionInfoCursor = snapshot.snapshotObjects
+                        val collectionInfoList: MutableList<Collection> = ArrayList()
+                        try {
+                            while (collectionInfoCursor.hasNext()) {
+                                val collectionInfo = collectionInfoCursor.next()
+                                collectionInfoList.add(collectionInfo)
+                            }
+                        } catch (e: AGConnectCloudDBException) {
+                            Log.w(TAG, "processQueryResult: " + e.message)
+                        } finally {
+                            snapshot.release()
+                        }
+                        _cloudDbCollectionResponse.value = collectionInfoList
+                        trySend(Resource.Success(collectionInfoList))
+                        Log.e(TAG, "Query is success.")
                     }
-                } catch (e: AGConnectCloudDBException) {
-                    Log.w(TAG, "processQueryResult: " + e.message)
-                } finally {
-                    snapshot.release()
+                        ?.addOnFailureListener {
+                            trySend(Resource.Error(Exception(("Something went wrong please try again later"))))
+                        }
+                    awaitClose {
+                        queryTask?.addOnSuccessListener(null)
+                        queryTask?.addOnFailureListener(null)
+                        channel.close()
+                    }
                 }
-                _cloudDbCollectionResponse.value = collectionInfoList
-                trySend(Resource.Success(collectionInfoList))
-                Log.e(TAG, "Query is success.")
-            }
-                ?.addOnFailureListener {
-                    trySend(Resource.Error(Exception(("Something went wrong please try again later"))))
-                }
-            awaitClose {
-                queryTask?.addOnSuccessListener(null)
-                queryTask?.addOnFailureListener(null)
-                channel.close()
             }
         }
 

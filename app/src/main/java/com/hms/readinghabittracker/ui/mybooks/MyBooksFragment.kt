@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -53,8 +54,8 @@ class MyBooksFragment() :
     }
 
     override fun setupObserver() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.myBooksUiState.collect { myBooksUiState ->
                     binding.loadingBar.isVisible = myBooksUiState.loading
 
@@ -64,9 +65,14 @@ class MyBooksFragment() :
                             myBooksAdapter.setCollectionList(it)
                         }
                     }
+
+                    if (myBooksUiState.error.isNotBlank()) {
+                        Toast.makeText(requireContext(), "${myBooksUiState.error}", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
+
     }
 
     private fun setAdapter() {

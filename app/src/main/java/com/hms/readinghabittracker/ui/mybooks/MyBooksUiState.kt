@@ -5,13 +5,13 @@ import com.hms.readinghabittracker.data.model.CollectionUIModel
 data class MyBooksUiState(
     val loading: Boolean,
     val collectionsAndBooks: List<CollectionUIModel>,
-    val error: List<String>,
+    val error: String,
 ) {
     companion object {
         fun initial() = MyBooksUiState(
             loading = false,
             collectionsAndBooks = emptyList(),
-            error = emptyList()
+            error = ""
         )
     }
 }
