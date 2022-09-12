@@ -17,9 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MyBooksViewModel @Inject constructor(
     private val cloudDbRepository: CloudDbRepository,
-    agcUser: AGConnectAuth,
-) :
-    ViewModel() {
+    private val agcUser: AGConnectAuth,
+) : ViewModel() {
 
     private val userId = agcUser.currentUser.uid.toLong()
     private val _myBooksUiState = MutableStateFlow(MyBooksUiState.initial())
@@ -48,7 +47,7 @@ class MyBooksViewModel @Inject constructor(
         _myBooksUiState.update {
             it.copy(
                 loading = false,
-                error = emptyList(),
+                error = "",
                 collectionsAndBooks = collectionsAndBooks
             )
         }

@@ -28,10 +28,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         bottomNavigationView.setupWithNavController(navController)
-        setUpBottomNavigationView(navController)
+        setupBottomNavigationChangeListener(navController)
     }
 
-    private fun setUpBottomNavigationView(navController: NavController) {
+    private fun setupBottomNavigationChangeListener(navController: NavController) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.myBooksFragment -> showBottomNavigationView()
