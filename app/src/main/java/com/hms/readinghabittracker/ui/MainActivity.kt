@@ -8,6 +8,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.databinding.ActivityMainBinding
+import com.hms.readinghabittracker.ui.goals.GoalItemFragment
+import com.hms.readinghabittracker.ui.goals.GoalsFragmentDirections
+import com.hms.readinghabittracker.ui.splash.SplashFragmentDirections
+import com.hms.readinghabittracker.utils.Constant.INITIAL_FRAGMENT
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +33,19 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView.setupWithNavController(navController)
         setUpBottomNavigationView(navController)
+
+
+        val initialFragment = intent.getStringExtra(INITIAL_FRAGMENT)
+        initialFragment?.let {
+            if (it == GoalItemFragment.TAG) {
+                val goalItemId = this@MainActivity.intent.getIntExtra(GoalItemFragment.ID, -1)
+                if (goalItemId >= 0) {
+                    val action =
+                        SplashFragmentDirections.actionSplashFragmentToGoalItemFragment(goalItemId)
+                    navController.navigate(action)
+                }
+            }
+        }
     }
 
     private fun setUpBottomNavigationView(navController: NavController) {
