@@ -48,20 +48,11 @@
     <!-- Goals -->
     <string name="goals">Goals</string>
     <string name="time">Time</string>
-    <string name="add_new_goal">Add New Goal</string>
-    <string name="goal_name">Goal Name</string>
-    <string name="days">Days</string>
-    <string name="select_days">Select Days</string>
-    <string name="sample_time">16:30</string>
     <string name="save_goal">Save Goal</string>
-    <string name="cancel">Cancel</string>
-    <string name="ok">Ok</string>
-    <string name="monday">Monday</string>
-    <string name="tuesday">Tuesday</string>
-    <string name="wednesday">Wednesday</string>
-    <string name="thursday">Thursday</string>
-    <string name="friday">Friday</string>
-    <string name="saturday">Saturday</string>
-    <string name="sunday">Sunday</string>
+    <string name="add_goal">Add Goal</string>
+    <string name="title_text">Title</string>
+    <string name="description_text">Description</string>
+    <string name="date_text">Date</string>
+    <string name="time_text">Time</string>
 
 </resources>
