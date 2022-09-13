@@ -2,7 +2,7 @@ package com.hms.readinghabittracker.data.repository
 
 import android.content.Intent
 import com.hms.readinghabittracker.data.model.User
-import com.hms.readinghabittracker.listener.IServiceListener
+import com.hms.readinghabittracker.utils.listener.IServiceListener
 import com.hms.readinghabittracker.utils.Resource
 import com.huawei.agconnect.auth.AGConnectAuth
 import com.huawei.agconnect.auth.AGConnectUser

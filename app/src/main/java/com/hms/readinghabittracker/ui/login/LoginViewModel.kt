@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.hms.readinghabittracker.data.model.User
 import com.hms.readinghabittracker.data.repository.AuthenticationRepository
 import com.hms.readinghabittracker.data.repository.CloudDbRepository
-import com.hms.readinghabittracker.listener.IServiceListener
+import com.hms.readinghabittracker.utils.listener.IServiceListener
 import com.hms.readinghabittracker.utils.Resource
 import com.huawei.agconnect.auth.AGConnectUser
 import dagger.hilt.android.lifecycle.HiltViewModel

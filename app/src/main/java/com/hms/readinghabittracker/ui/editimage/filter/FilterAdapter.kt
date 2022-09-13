@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hms.readinghabittracker.databinding.FilterItemBinding
-import com.hms.readinghabittracker.utils.OnItemClickListener
+import com.hms.readinghabittracker.utils.listener.OnItemClickListener
 import com.hms.readinghabittracker.utils.extensions.loadImage
 
 class FilterAdapter(
