@@ -48,6 +48,9 @@
             app:destination="@id/onBoardingFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_goalItemFragment"
+            app:destination="@id/goalItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/onBoardingFragment"
@@ -64,7 +67,14 @@
         android:id="@+id/goalsFragment"
         android:name="com.hms.readinghabittracker.ui.goals.GoalsFragment"
         android:label="fragment_goals"
-        tools:layout="@layout/fragment_goals" />
+        tools:layout="@layout/fragment_goals" >
+        <action
+            android:id="@+id/action_goalsFragment_to_addGoalFragment"
+            app:destination="@id/addGoalFragment" />
+        <action
+            android:id="@+id/action_goalsFragment_to_goalItemFragment"
+            app:destination="@id/goalItemFragment" />
+    </fragment>
     <fragment
         android:id="@+id/collectionsFragment"
         android:name="com.hms.readinghabittracker.ui.collections.CollectionsFragment"
@@ -107,5 +117,21 @@
         <argument
             android:name="image"
             app:argType="android.graphics.Bitmap" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGoalFragment"
+        android:name="com.hms.readinghabittracker.ui.goals.AddGoalFragment"
+        android:label="AddGoalFragment" >
+        <action
+            android:id="@+id/action_addGoalFragment_to_goalsFragment"
+            app:destination="@id/goalsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/goalItemFragment"
+        android:name="com.hms.readinghabittracker.ui.goals.GoalItemFragment"
+        android:label="GoalItemFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </fragment>
 </navigation>
