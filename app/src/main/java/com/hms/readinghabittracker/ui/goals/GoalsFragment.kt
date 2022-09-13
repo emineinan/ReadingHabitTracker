@@ -2,7 +2,6 @@ package com.hms.readinghabittracker.ui.goals
 
 import android.annotation.SuppressLint
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
@@ -27,10 +26,7 @@ class GoalsFragment :
 
     override val viewModel: GoalsViewModel by viewModels()
     private lateinit var recyclerView: RecyclerView
-    private val showDone: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>(false)
-    }
-
+    private lateinit var adapter: GoalsAdapter
 
     override fun setupUi() {
         requestPermissions()
@@ -39,34 +35,38 @@ class GoalsFragment :
             findNavController().navigate(R.id.action_goalsFragment_to_addGoalFragment)
         }
 
-        recyclerView = binding.recyclerViewGoals
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        val adapter = GoalsAdapter()
-        recyclerView.adapter = adapter
+        setAdapter()
+    }
 
-        var observableList = MutableLiveData<List<GoalItem>>()
+    override fun setupObserver() {
+        val observableList: MutableLiveData<List<GoalItem>> =
+            viewModel.allGoalItems as MutableLiveData
 
-        showDone.observe(this.viewLifecycleOwner) { newValue ->
-            observableList.removeObservers(this.viewLifecycleOwner)
-
-            if (newValue == true) {
-                observableList = viewModel.allGoalItemsDone as MutableLiveData
-                if (activity is AppCompatActivity) {
-                    (activity as AppCompatActivity).supportActionBar?.title = "Goal done"
-                }
-            } else {
-                observableList = viewModel.allGoalItems as MutableLiveData
-                if (activity is AppCompatActivity) {
-                    (activity as AppCompatActivity).supportActionBar?.title = "Goal to do"
-                }
-            }
-            observableList.observe(this.viewLifecycleOwner) { items ->
-                items.let {
-                    adapter.submitList(it)
-                }
+        observableList.observe(this.viewLifecycleOwner) { items ->
+            items.let {
+                adapter.submitList(it)
             }
         }
+    }
 
+    private fun setAdapter() {
+        recyclerView = binding.recyclerViewGoals
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        adapter =
+            GoalsAdapter(::deleteGoalItem) { id ->
+                val action = GoalsFragmentDirections.actionGoalsFragmentToGoalItemFragment(id)
+                findNavController().navigate(action)
+            }
+        recyclerView.adapter = adapter
+    }
+
+    private fun deleteGoalItem(goalItem: GoalItem) {
+        viewModel.deleteNewGoalItem(
+            goalItem.id,
+            goalItem.name,
+            goalItem.description,
+            goalItem.timeStamp
+        )
     }
 
     private fun requestPermissions() {

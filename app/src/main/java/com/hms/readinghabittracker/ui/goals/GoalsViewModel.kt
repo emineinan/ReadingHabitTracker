@@ -27,8 +27,6 @@ class GoalsViewModel @Inject constructor(
 
     val allGoalItems: LiveData<List<GoalItem>> =
         goalsRepository.observeAllGoals().asLiveData()
-    val allGoalItemsDone: LiveData<List<GoalItem>> =
-        goalsRepository.observeGoalsDone().asLiveData()
     private val alarmManager: AlarmManager =
         contextProvider.getContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
@@ -36,12 +34,6 @@ class GoalsViewModel @Inject constructor(
         viewModelScope.launch {
             val goalItemId = goalsRepository.insertGoal(goalItem)
             scheduleReminder(goalItemId.toInt(), goalItem.name, goalItem.timeStamp.time)
-        }
-    }
-
-    private fun updateGoalItem(goalItem: GoalItem) {
-        viewModelScope.launch {
-            goalsRepository.updateGoal(goalItem)
         }
     }
 
@@ -105,5 +97,17 @@ class GoalsViewModel @Inject constructor(
 
     fun getGoalItem(id: Int): LiveData<GoalItem> {
         return goalsRepository.observeGoal(id).asLiveData()
+    }
+
+    fun deleteNewGoalItem(
+        goalItemId: Int,
+        goalItemName: String,
+        goalItemDescription: String,
+        goalItemDate: Date
+    ) {
+        val newGoalItem =
+            getNewGoalEntry(goalItemName, goalItemDescription, goalItemDate, goalItemId)
+        deleteGoalItem(newGoalItem)
+        cancelReminder(goalItemId)
     }
 }

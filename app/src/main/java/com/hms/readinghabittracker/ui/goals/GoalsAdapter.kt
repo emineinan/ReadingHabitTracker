@@ -9,8 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.data.model.GoalItem
 import com.hms.readinghabittracker.databinding.GoalsItemBinding
+import java.util.*
+import kotlin.concurrent.schedule
 
-class GoalsAdapter : ListAdapter<GoalItem, GoalsAdapter.GoalsViewHolder>(diffCallBack) {
+class GoalsAdapter(
+    private val deleteCallBack: (goalItem: GoalItem) -> Unit,
+    private val navCallBack: (id: Int) -> Unit
+) :
+    ListAdapter<GoalItem, GoalsAdapter.GoalsViewHolder>(diffCallBack) {
 
     class GoalsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = GoalsItemBinding.bind(view)
@@ -25,6 +31,24 @@ class GoalsAdapter : ListAdapter<GoalItem, GoalsAdapter.GoalsViewHolder>(diffCal
     override fun onBindViewHolder(holder: GoalsViewHolder, postion: Int) {
         holder.binding.apply {
             val goalsItem = getItem(postion)
+
+            goalItemCardView.setOnClickListener {
+                navCallBack(goalsItem.id)
+            }
+
+            var timer = Timer("check_task", false)
+            checkboxGoalsDone.setOnCheckedChangeListener { _, isChecked ->
+                timer.cancel()
+                timer.purge()
+                timer = Timer("check_task:" + goalsItem.id, false)
+
+                if (isChecked != goalsItem.done) {
+                    timer.schedule(400) {
+                        deleteCallBack(goalsItem)
+                    }
+                }
+            }
+
             textViewGoalName.text = goalsItem.name
             textViewGoalsDate.text = goalsItem.timeStamp.toString()
             checkboxGoalsDone.isChecked = goalsItem.done
