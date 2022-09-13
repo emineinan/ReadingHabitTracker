@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.FragmentSplashBinding
+import com.hms.readinghabittracker.ui.MainActivity
 import com.huawei.agconnect.auth.AGConnectAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -23,7 +24,12 @@ class SplashFragment :
 
     override fun setupObserver() {
         lifecycleScope.launch {
+            if (deepLinkIsExist()) {
+                return@launch
+            }
+
             delay(2000)
+
             if (agConnect.currentUser != null) {
                 findNavController().navigate(R.id.action_splashFragment_to_myBooksFragment)
             } else {
@@ -36,5 +42,22 @@ class SplashFragment :
                 }
             }
         }
+    }
+
+
+    private fun deepLinkIsExist(): Boolean {
+        val activity = requireActivity() as MainActivity
+
+        if (activity.isDeepLinkExist && activity.getDeepLinkGoalItemId() != null) {
+            val goalItemId = activity.getDeepLinkGoalItemId() ?: return false
+            activity.deepLinkIsHandled()
+            val action =
+                SplashFragmentDirections.actionSplashFragmentToGoalItemFragment(
+                    goalItemId
+                )
+            findNavController().navigate(action)
+            return true
+        }
+        return false
     }
 }

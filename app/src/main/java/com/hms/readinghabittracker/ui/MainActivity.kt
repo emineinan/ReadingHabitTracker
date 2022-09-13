@@ -9,14 +9,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.databinding.ActivityMainBinding
 import com.hms.readinghabittracker.ui.goals.GoalItemFragment
-import com.hms.readinghabittracker.ui.goals.GoalsFragmentDirections
-import com.hms.readinghabittracker.ui.splash.SplashFragmentDirections
 import com.hms.readinghabittracker.utils.Constant.INITIAL_FRAGMENT
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    var isDeepLinkExist = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +39,26 @@ class MainActivity : AppCompatActivity() {
             if (it == GoalItemFragment.TAG) {
                 val goalItemId = this@MainActivity.intent.getIntExtra(GoalItemFragment.ID, -1)
                 if (goalItemId >= 0) {
-                    val action =
-                        SplashFragmentDirections.actionSplashFragmentToGoalItemFragment(goalItemId)
-                    navController.navigate(action)
+                    isDeepLinkExist = true
                 }
             }
         }
+
+    }
+
+    fun deepLinkIsHandled() {
+        isDeepLinkExist = false
+    }
+
+    fun getDeepLinkGoalItemId(): Int? {
+        if (!isDeepLinkExist) {
+            return null
+        }
+        val goalItemId = this@MainActivity.intent.getIntExtra(GoalItemFragment.ID, -1)
+        if (goalItemId == -1) {
+            return null
+        }
+        return goalItemId
     }
 
     private fun setUpBottomNavigationView(navController: NavController) {
