@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.hms.readinghabittracker.data.local.database.dao.GoalsDao
 import com.hms.readinghabittracker.data.local.database.database.GoalsDatabase
-import com.hms.readinghabittracker.data.repository.DefaultGoalsRepository
+import com.hms.readinghabittracker.data.repository.GoalsRepositoryImpl
 import com.hms.readinghabittracker.data.repository.GoalsRepository
 import com.hms.readinghabittracker.utils.Constant.DATABASE_NAME
 import com.hms.readinghabittracker.utils.ContextProvider
@@ -36,7 +36,7 @@ object DatabaseModule {
     @Singleton
     fun provideDefaultGoalsRepository(
         goalsDao: GoalsDao
-    ) = DefaultGoalsRepository(goalsDao) as GoalsRepository
+    ) = GoalsRepositoryImpl(goalsDao) as GoalsRepository
 
     @Provides
     @Singleton

@@ -5,7 +5,7 @@ import com.hms.readinghabittracker.data.model.GoalItem
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class DefaultGoalsRepository @Inject constructor(
+class GoalsRepositoryImpl @Inject constructor(
     private val goalsDao: GoalsDao
 ) : GoalsRepository {
     override suspend fun insertGoal(goalItem: GoalItem): Long = goalsDao.insertGoal(goalItem)
