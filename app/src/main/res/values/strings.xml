@@ -1,13 +1,10 @@
 <resources>
     <string name="app_name">ReadingHabitTracker</string>
+
+    <!-- OnBoarding -->
     <string name="next">Next</string>
     <string name="finish">Finish</string>
     <string name="icon">Icon</string>
-    <string name="goals">Goals</string>
-    <string name="collections">Collections</string>
-    <string name="time">Time</string>
-
-    <!-- OnBoarding -->
     <string name="on_boarding_description1">Track Your Reading Time and Reading Habit</string>
     <string name="on_boarding_description2">Achieve Your Reading Goals</string>
     <string name="on_boarding_description3">Become a Better Reader</string>
@@ -16,6 +13,7 @@
     <string name="location_permission">You need to allow location permissions to use this app.</string>
 
     <!-- Collections -->
+    <string name="collections">Collections</string>
     <string name="add_collection">Add Collection</string>
     <string name="collection_name">Collection Name</string>
     <string name="empty_field_warning">Please enter a collection name!</string>
@@ -46,5 +44,15 @@
     <string name="done">Done</string>
     <string name="circular">Circular</string>
     <string name="rectangle">Rectangle</string>
+
+    <!-- Goals -->
+    <string name="goals">Goals</string>
+    <string name="time">Time</string>
+    <string name="save_goal">Save Goal</string>
+    <string name="add_goal">Add Goal</string>
+    <string name="title_text">Title</string>
+    <string name="description_text">Description</string>
+    <string name="date_text">Date</string>
+    <string name="time_text">Time</string>
 
 </resources>

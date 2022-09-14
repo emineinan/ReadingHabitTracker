@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.FragmentFilterBinding
 import com.hms.readinghabittracker.utils.Constant
-import com.hms.readinghabittracker.utils.OnItemClickListener
+import com.hms.readinghabittracker.utils.listener.OnItemClickListener
 import com.huawei.hms.image.vision.ImageVision
 import com.huawei.hms.image.vision.ImageVisionImpl
 import dagger.hilt.android.AndroidEntryPoint

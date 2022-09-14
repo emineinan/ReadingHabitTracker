@@ -1,4 +1,4 @@
-package com.hms.readinghabittracker.utils
+package com.hms.readinghabittracker.utils.listener
 
 interface OnItemClickListener {
     fun onItemClicked(position: Int)

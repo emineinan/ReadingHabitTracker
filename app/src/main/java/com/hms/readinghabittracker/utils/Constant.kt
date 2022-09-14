@@ -44,4 +44,14 @@ object Constant {
     const val requestId = "requestId"
     const val taskJson = "taskJson"
     const val authJson = "authJson"
+
+    // Database
+    const val DATABASE_NAME = "goals_database"
+
+    // Receiver
+    const val TAG_GOAL_NAME = "GOAL_NAME"
+    const val TAG_GOAL_ID = "GOAL_ID"
+    const val NOTIFICATIONS_CHANNEL_ID = "notifications_id"
+    const val NOTIFICATIONS_CHANNEL_NAME = "Goals"
+    const val INITIAL_FRAGMENT = "INITIAL_FRAGMENT"
 }
