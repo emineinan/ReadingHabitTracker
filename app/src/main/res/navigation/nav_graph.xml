@@ -134,4 +134,9 @@
             android:name="id"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/nearestLibrariesFragment"
+        android:name="com.hms.readinghabittracker.ui.nearestlibraries.NearestLibrariesFragment"
+        android:label="fragment_nearest_libraries"
+        tools:layout="@layout/fragment_nearest_libraries" />
 </navigation>

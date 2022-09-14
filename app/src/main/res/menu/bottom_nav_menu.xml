@@ -8,4 +8,8 @@
         android:id="@+id/goalsFragment"
         android:icon="@drawable/ic_goal"
         android:title="@string/goals" />
+    <item
+        android:id="@+id/nearestLibrariesFragment"
+        android:icon="@drawable/ic_library"
+        android:title="@string/nearest_libraries" />
 </menu>
