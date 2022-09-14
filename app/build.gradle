@@ -119,4 +119,13 @@ dependencies {
 
     // Huawei Image Kit
     implementation 'com.huawei.hms:image-vision:1.0.3.305'
+
+    // Huawei Map Kit
+    implementation 'com.huawei.hms:maps:6.4.1.300'
+
+    // Huawei Location Kit
+    implementation 'com.huawei.hms:location:6.3.0.300'
+
+    // Huawei Site Kit
+    implementation 'com.huawei.hms:site:6.2.0.301'
 }
