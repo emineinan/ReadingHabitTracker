@@ -33,8 +33,7 @@
     <string name="add_book_image">Add Book Image</string>
     <string name="add_book_warning">Please fill in the required fields.</string>
 
-    <!-- Edit Image -->
-    <!-- Crop -->
+    <!-- Edit Image - Crop -->
     <string name="edit_image">Edit Image</string>
     <string name="crop_image">Crop Image</string>
     <string name="apply_filter">Apply Filter</string>
@@ -54,5 +53,8 @@
     <string name="description_text">Description</string>
     <string name="date_text">Date</string>
     <string name="time_text">Time</string>
+
+    <!-- Nearest Libraries -->
+    <string name="nearest_libraries">Nearest Libraries</string>
 
 </resources>

@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.myBooksFragment -> showBottomNavigationView()
                 R.id.goalsFragment -> showBottomNavigationView()
+                R.id.nearestLibrariesFragment -> showBottomNavigationView()
                 else -> hideBottomNavigationView()
             }
         }
