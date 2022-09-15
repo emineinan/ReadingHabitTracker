@@ -4,9 +4,6 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.data.model.Library
@@ -86,16 +83,19 @@ class NearestLibrariesFragment :
 
             override fun onSearchResult(response: NearbySearchResponse?) {
                 response?.let {
+                    libraryList.clear()
                     siteLibraryList = it.sites
                     siteLibraryList.forEach { siteLibrary ->
-                        val library = Library(
-                            siteLibrary.name,
-                            siteLibrary.formatAddress,
-                            siteLibrary.location
-                        )
-                        libraryList.add(library)
+                        if (siteLibrary.location != null) {
+                            val library = Library(
+                                siteLibrary.name,
+                                siteLibrary.formatAddress,
+                                siteLibrary.location
+                            )
+                            libraryList.add(library)
+                        }
                     }
-                    if (it.sites.isNotEmpty()) {
+                    if (siteLibraryList.isNotEmpty()) {
                         setAdapter()
                         binding.progressBarNearestLibraries.visibility = View.INVISIBLE
                     } else {
@@ -107,9 +107,13 @@ class NearestLibrariesFragment :
     }
 
     private fun setAdapter() {
-        binding.recyclerViewNearestLibraries.layoutManager = LinearLayoutManager(context)
-        adapter = NearestLibrariesAdapter(libraryList)
-        binding.recyclerViewNearestLibraries.adapter = adapter
+        try {
+            adapter = NearestLibrariesAdapter(libraryList)
+            binding.recyclerViewNearestLibraries.adapter = adapter
+
+        } catch (e: Exception) {
+            Log.e("ADAPTER EXCEPTION", e.toString())
+        }
     }
 
     private fun requestPermissions() {
