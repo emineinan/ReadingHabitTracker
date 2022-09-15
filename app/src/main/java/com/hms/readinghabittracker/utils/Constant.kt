@@ -54,4 +54,7 @@ object Constant {
     const val NOTIFICATIONS_CHANNEL_ID = "notifications_id"
     const val NOTIFICATIONS_CHANNEL_NAME = "Goals"
     const val INITIAL_FRAGMENT = "INITIAL_FRAGMENT"
+
+    // Map
+    const val MAP_KEY = "DAEDAAckTAdZ/aWT5I35ayZZQXYPLugtG7hgfF3wAVnK6s9XutrbTnts4KhSi3NVxIyofRq5EvzlCUR0AFGoJRoa6LtFEOB5TuJ2Vg=="
 }
