@@ -15,7 +15,9 @@ abstract class BaseFragment<T : ViewBinding, out VM : ViewModel>(
 ) : Fragment() {
 
     private var _binding: T? = null
-    val binding get() = _binding!!
+    val binding get() = _binding?: run{
+        throw Exception("BINDING EXCEPTION")
+    }
 
     abstract val viewModel: VM
 
