@@ -16,9 +16,6 @@
         <action
             android:id="@+id/action_myBooksFragment_to_addBookFragment"
             app:destination="@id/addBookFragment" />
-        <action
-            android:id="@+id/action_myBooksFragment_to_bookDetailFragment"
-            app:destination="@id/bookDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -70,7 +67,7 @@
         android:id="@+id/goalsFragment"
         android:name="com.hms.readinghabittracker.ui.goals.GoalsFragment"
         android:label="fragment_goals"
-        tools:layout="@layout/fragment_goals">
+        tools:layout="@layout/fragment_goals" >
         <action
             android:id="@+id/action_goalsFragment_to_addGoalFragment"
             app:destination="@id/addGoalFragment" />
@@ -124,7 +121,7 @@
     <fragment
         android:id="@+id/addGoalFragment"
         android:name="com.hms.readinghabittracker.ui.goals.AddGoalFragment"
-        android:label="AddGoalFragment">
+        android:label="AddGoalFragment" >
         <action
             android:id="@+id/action_addGoalFragment_to_goalsFragment"
             app:destination="@id/goalsFragment" />
@@ -132,7 +129,7 @@
     <fragment
         android:id="@+id/goalItemFragment"
         android:name="com.hms.readinghabittracker.ui.goals.GoalItemFragment"
-        android:label="GoalItemFragment">
+        android:label="GoalItemFragment" >
         <argument
             android:name="id"
             app:argType="integer" />
@@ -141,7 +138,20 @@
         android:id="@+id/nearestLibrariesFragment"
         android:name="com.hms.readinghabittracker.ui.nearestlibraries.NearestLibrariesFragment"
         android:label="fragment_nearest_libraries"
-        tools:layout="@layout/fragment_nearest_libraries" />
+        tools:layout="@layout/fragment_nearest_libraries">
+        <action
+            android:id="@+id/action_nearestLibrariesFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.hms.readinghabittracker.ui.map.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map">
+        <argument
+            android:name="library"
+            app:argType="com.hms.readinghabittracker.data.model.Library" />
+    </fragment>
     <fragment
         android:id="@+id/bookDetailFragment"
         android:name="com.hms.readinghabittracker.ui.bookdetail.BookDetailFragment"

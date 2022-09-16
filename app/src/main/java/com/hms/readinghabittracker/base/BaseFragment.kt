@@ -15,7 +15,9 @@ abstract class BaseFragment<T : ViewBinding, out VM : ViewModel>(
 ) : Fragment() {
 
     private var _binding: T? = null
-    val binding get() = _binding!!
+    val binding get() = _binding?: run{
+        throw Exception("BINDING EXCEPTION")
+    }
 
     abstract val viewModel: VM
 
@@ -29,7 +31,7 @@ abstract class BaseFragment<T : ViewBinding, out VM : ViewModel>(
         savedInstanceState: Bundle?
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
-        return binding.root
+        return _binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

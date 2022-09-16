@@ -1,19 +1,31 @@
 package com.hms.readinghabittracker.ui.nearestlibraries
 
+import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.data.model.Library
 import com.hms.readinghabittracker.databinding.FragmentNearestLibrariesBinding
+import com.hms.readinghabittracker.utils.Constant.MAP_KEY
 import com.hms.readinghabittracker.utils.PermissionUtils
-import com.huawei.hms.location.*
+import com.huawei.hms.location.FusedLocationProviderClient
+import com.huawei.hms.location.LocationCallback
+import com.huawei.hms.location.LocationRequest
+import com.huawei.hms.location.LocationResult
+import com.huawei.hms.location.LocationServices
 import com.huawei.hms.site.api.SearchResultListener
 import com.huawei.hms.site.api.SearchServiceFactory
-import com.huawei.hms.site.api.model.*
+import com.huawei.hms.site.api.model.Coordinate
+import com.huawei.hms.site.api.model.HwLocationType
+import com.huawei.hms.site.api.model.NearbySearchRequest
+import com.huawei.hms.site.api.model.NearbySearchResponse
+import com.huawei.hms.site.api.model.SearchStatus
+import com.huawei.hms.site.api.model.Site
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -23,20 +35,26 @@ import java.net.URLEncoder
 class NearestLibrariesFragment :
     BaseFragment<FragmentNearestLibrariesBinding, NearestLibrariesViewModel>(
         FragmentNearestLibrariesBinding::inflate
-    ),
-    EasyPermissions.PermissionCallbacks {
+    ), EasyPermissions.PermissionCallbacks {
 
     override val viewModel: NearestLibrariesViewModel by viewModels()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var currentLatitude = 0.0
     private var currentLongitude = 0.0
     private var libraryList = arrayListOf<Library>()
-    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: NearestLibrariesAdapter
+
+    private var mBinding: FragmentNearestLibrariesBinding? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        mBinding = FragmentNearestLibrariesBinding.inflate(inflater, container, false)
+        return mBinding?.root
+    }
 
     override fun setupUi() {
         super.setupUi()
         requestPermissions()
+        setAdapter()
     }
 
     private fun getLocation() {
@@ -46,7 +64,7 @@ class NearestLibrariesFragment :
             override fun onLocationResult(locationResult: LocationResult) {
                 currentLatitude = locationResult.lastLocation.latitude
                 currentLongitude = locationResult.lastLocation.longitude
-                requestLocation()
+                fetchNearestLibraries()
             }
         }
         val mLocationRequest = LocationRequest()
@@ -58,7 +76,7 @@ class NearestLibrariesFragment :
         ).addOnSuccessListener {}.addOnFailureListener {}
     }
 
-    private fun requestLocation() {
+    private fun fetchNearestLibraries() {
         val request = NearbySearchRequest()
         request.hwPoiType =
             HwLocationType.LIBRARY
@@ -71,7 +89,7 @@ class NearestLibrariesFragment :
         val searchService = SearchServiceFactory.create(
             requireContext(),
             URLEncoder.encode(
-                "DAEDAAckTAdZ/aWT5I35ayZZQXYPLugtG7hgfF3wAVnK6s9XutrbTnts4KhSi3NVxIyofRq5EvzlCUR0AFGoJRoa6LtFEOB5TuJ2Vg==",
+                MAP_KEY,
                 "utf-8"
             )
         )
@@ -84,26 +102,39 @@ class NearestLibrariesFragment :
 
             override fun onSearchResult(response: NearbySearchResponse?) {
                 response?.let {
+                    libraryList.clear()
                     siteLibraryList = it.sites
                     siteLibraryList.forEach { siteLibrary ->
-                        val library = Library(
-                            siteLibrary.name,
-                            siteLibrary.formatAddress,
-                            siteLibrary.location
-                        )
-                        libraryList.add(library)
+                        if (siteLibrary.location != null) {
+                            val library = Library(
+                                siteLibrary.name,
+                                siteLibrary.formatAddress,
+                                siteLibrary.location
+                            )
+                            libraryList.add(library)
+                        }
                     }
-                    setAdapter()
+                    if (siteLibraryList.isNotEmpty()) {
+                        updateList()
+
+                        mBinding?.progressBarNearestLibraries?.visibility = View.GONE
+
+                    } else {
+                        //todo show error toast
+                    }
                 }
             }
         })
     }
 
+    private fun updateList() {
+        adapter.notifyDataSetChanged()
+    }
+
     private fun setAdapter() {
-        recyclerView = binding.recyclerViewNearestLibraries
-        recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = NearestLibrariesAdapter(libraryList)
-        recyclerView.adapter = adapter
+        mBinding?.recyclerViewNearestLibraries?.adapter = adapter
+        mBinding?.recyclerViewNearestLibraries?.setHasFixedSize(true)
     }
 
     private fun requestPermissions() {
@@ -129,21 +160,16 @@ class NearestLibrariesFragment :
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        getLocation()
     }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (PermissionUtils.hasLocationPermissions(requireContext())) {
-            getLocation()
-        }
-    }
 }

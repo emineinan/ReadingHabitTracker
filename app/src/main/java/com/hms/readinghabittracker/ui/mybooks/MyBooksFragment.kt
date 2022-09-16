@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MyBooksFragment() :
+class MyBooksFragment :
     BaseFragment<FragmentMyBooksBinding, MyBooksViewModel>(FragmentMyBooksBinding::inflate) {
 
     override val viewModel: MyBooksViewModel by viewModels()
@@ -36,6 +36,9 @@ class MyBooksFragment() :
     override fun setupUi() {
         setHasOptionsMenu(true)
         setAdapter()
+        binding.fabCollections.setOnClickListener {
+            findNavController().navigate(R.id.action_myBooksFragment_to_collectionsFragment)
+        }
         viewModel.getCollectionsForCurrentUser()
     }
 
@@ -59,6 +62,8 @@ class MyBooksFragment() :
                 viewModel.myBooksUiState.collect { myBooksUiState ->
                     binding.loadingBar.isVisible = myBooksUiState.loading
 
+                    binding.tvErrorMsg.isVisible = myBooksUiState.showEmptyListMessage
+
                     if (myBooksUiState.collectionsAndBooks.isNotEmpty()) {
                         myBooksUiState.collectionsAndBooks.let {
                             Log.d("CollectionsAndBooks", it.toString())
@@ -80,6 +85,13 @@ class MyBooksFragment() :
         binding.recyclerViewMyBooks.setHasFixedSize(true)
         binding.recyclerViewMyBooks.adapter = myBooksAdapter
         binding.recyclerViewMyBooks.setDivider(R.drawable.recyclerview_divider)
+        val freeSpaceAtBottom = 100 // the bottom free space in pixels
+        binding.recyclerViewMyBooks.clipToPadding = false
+        binding.recyclerViewMyBooks.setPadding(binding.recyclerViewMyBooks.paddingLeft,
+            binding.recyclerViewMyBooks.top,
+            binding.recyclerViewMyBooks.right,
+            freeSpaceAtBottom)
+
     }
 
     override fun onResume() {

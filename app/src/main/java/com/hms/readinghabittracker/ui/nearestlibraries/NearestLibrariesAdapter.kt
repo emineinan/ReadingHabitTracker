@@ -3,6 +3,7 @@ package com.hms.readinghabittracker.ui.nearestlibraries
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.data.model.Library
@@ -26,6 +27,14 @@ class NearestLibrariesAdapter(private val libraries: List<Library>) :
             val library = libraries[position]
             textViewLibraryName.text = library.name
             textViewLibraryAddress.text = library.address
+
+            cardViewLibrary.setOnClickListener {
+                val action =
+                    NearestLibrariesFragmentDirections.actionNearestLibrariesFragmentToMapFragment(
+                        library
+                    )
+                findNavController(cardViewLibrary).navigate(action)
+            }
         }
     }
 

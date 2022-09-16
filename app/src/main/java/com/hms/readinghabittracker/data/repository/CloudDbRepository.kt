@@ -166,7 +166,7 @@ class CloudDbRepository @Inject constructor(
                         }
                         _cloudDbCollectionResponse.value = collectionInfoList
                         trySend(Resource.Success(collectionInfoList))
-                        Log.e(TAG, "Query is success.")
+                        Log.e(TAG, "queryAllCollectionsForCurrentUser  is success.")
                     }
                         ?.addOnFailureListener {
                             trySend(Resource.Error(Exception(("Something went wrong please try again later"))))
@@ -211,7 +211,7 @@ class CloudDbRepository @Inject constructor(
                 }
                 _cloudDbBookResponse.value = bookInfoList
                 trySend(Resource.Success(bookInfoList))
-                Log.e(TAG, "Query is success.")
+                Log.e(TAG, "queryAllBooksForCurrentUser is success.")
             }
                 ?.addOnFailureListener {
                     trySend(Resource.Error(Exception(("Something went wrong please try again later"))))
