@@ -1,9 +1,6 @@
 package com.hms.readinghabittracker.ui.mybooks
 
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -34,26 +31,11 @@ class MyBooksFragment :
     private var myBooksAdapter = MyBooksAdapter()
 
     override fun setupUi() {
-        setHasOptionsMenu(true)
         setAdapter()
         binding.fabCollections.setOnClickListener {
             findNavController().navigate(R.id.action_myBooksFragment_to_collectionsFragment)
         }
         viewModel.getCollectionsForCurrentUser()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.my_books_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_collections -> {
-                findNavController().navigate(R.id.action_myBooksFragment_to_collectionsFragment)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     override fun setupObserver() {
