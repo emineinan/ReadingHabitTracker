@@ -48,7 +48,8 @@ class MyBooksViewModel @Inject constructor(
             it.copy(
                 loading = false,
                 error = "",
-                collectionsAndBooks = collectionsAndBooks
+                collectionsAndBooks = collectionsAndBooks,
+                showEmptyListMessage = collectionsAndBooks.isEmpty()
             )
         }
     }
@@ -57,13 +58,13 @@ class MyBooksViewModel @Inject constructor(
         _myBooksUiState.update { currentMyBooksUiState ->
             val errorMessage =
                 currentMyBooksUiState.error + exception.localizedMessage.orEmpty()
-            currentMyBooksUiState.copy(error = errorMessage, loading = false)
+            currentMyBooksUiState.copy(error = errorMessage, loading = false, showEmptyListMessage = false)
         }
     }
 
     private fun setLoadingState() {
         _myBooksUiState.update { currentMyBooksUiState ->
-            currentMyBooksUiState.copy(loading = true)
+            currentMyBooksUiState.copy(loading = true, showEmptyListMessage = false)
         }
     }
 }
