@@ -9,6 +9,10 @@
     <string name="on_boarding_description2">Achieve Your Reading Goals</string>
     <string name="on_boarding_description3">Become a Better Reader</string>
 
+    <!-- Login -->
+    <string name="quote">“Not all readers are leaders, but all leaders are readers.”</string>
+    <string name="famous">― Harry S. Truman</string>
+
     <!-- Permission -->
     <string name="location_permission">You need to allow location permissions to use this app.</string>
 
