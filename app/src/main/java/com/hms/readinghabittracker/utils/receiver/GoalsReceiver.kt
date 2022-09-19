@@ -33,7 +33,7 @@ class GoalsReceiver : BroadcastReceiver() {
         val notification = NotificationCompat.Builder(context, NOTIFICATIONS_CHANNEL_ID)
             .setContentTitle("Reading Time")
             .setContentText(goalName)
-            .setSmallIcon(R.drawable.ic_my_books)
+            .setSmallIcon(R.drawable.ic_rht)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .build()

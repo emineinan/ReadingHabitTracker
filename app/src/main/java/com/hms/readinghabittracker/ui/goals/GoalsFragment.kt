@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
@@ -13,11 +12,13 @@ import com.hms.readinghabittracker.data.model.GoalItem
 import com.hms.readinghabittracker.databinding.FragmentGoalsBinding
 import com.hms.readinghabittracker.utils.PermissionUtils
 import com.hms.readinghabittracker.utils.TimeUtils
+import com.huawei.agconnect.auth.AGConnectAuth
 import com.huawei.hms.kit.awareness.Awareness
 import com.huawei.hms.kit.awareness.capture.TimeCategoriesResponse
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class GoalsFragment :
@@ -27,6 +28,9 @@ class GoalsFragment :
     override val viewModel: GoalsViewModel by viewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: GoalsAdapter
+
+    @Inject
+    lateinit var agConnect: AGConnectAuth
 
     override fun setupUi() {
         requestPermissions()
@@ -51,7 +55,6 @@ class GoalsFragment :
 
     private fun setAdapter() {
         recyclerView = binding.recyclerViewGoals
-        recyclerView.layoutManager = LinearLayoutManager(context)
         adapter =
             GoalsAdapter(::deleteGoalItem) { id ->
                 val action = GoalsFragmentDirections.actionGoalsFragmentToGoalItemFragment(id)

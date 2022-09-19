@@ -25,14 +25,17 @@ class OnBoardingFragment :
         OnBoardingAdapter(
             listOf(
                 OnBoardingItem(
+                    getString(R.string.on_boarding_title1),
                     getString(R.string.on_boarding_description1),
-                    R.raw.time
+                    R.raw.collections
                 ),
                 OnBoardingItem(
+                    getString(R.string.on_boarding_title2),
                     getString(R.string.on_boarding_description2),
                     R.raw.focus
                 ),
                 OnBoardingItem(
+                    getString(R.string.on_boarding_title3),
                     getString(R.string.on_boarding_description3),
                     R.raw.book
                 )

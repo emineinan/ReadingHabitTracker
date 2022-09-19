@@ -3,7 +3,7 @@ package com.hms.readinghabittracker.utils
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.util.SparseArray
-import com.google.android.material.textfield.TextInputEditText
+import android.widget.EditText
 import com.huawei.hms.kit.awareness.barrier.TimeBarrier
 import java.text.SimpleDateFormat
 import java.util.*
@@ -11,17 +11,17 @@ import java.util.*
 object TimeUtils {
     fun initTimes(): SparseArray<String> {
         val timeDescriptionMap = SparseArray<String>()
-        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_WEEKDAY, "Today is weekday.")
-        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_WEEKEND, "Today is weekend.")
-        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_HOLIDAY, "Today is holiday.")
-        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_NOT_HOLIDAY, "Today is not holiday.")
-        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_MORNING, "Good morning.")
-        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_AFTERNOON, "Good afternoon.")
-        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_EVENING, "Good evening.")
-        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_NIGHT, "Good night.")
+        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_WEEKDAY, "Today is weekday")
+        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_WEEKEND, "Today is weekend")
+        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_HOLIDAY, "Today is holiday")
+        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_NOT_HOLIDAY, "Today is not holiday")
+        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_MORNING, "Good morning")
+        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_AFTERNOON, "Good afternoon")
+        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_EVENING, "Good evening")
+        timeDescriptionMap.put(TimeBarrier.TIME_CATEGORY_NIGHT, "Good night")
         return timeDescriptionMap
     }
-    
+
     private fun getFormattedDateString(date: Date): String {
         val dateFormat = "dd-MM-yyyy"
         val simpleDateFormat = SimpleDateFormat(dateFormat)
@@ -35,7 +35,7 @@ object TimeUtils {
     }
 
     fun getTimePickerListener(
-        input: TextInputEditText,
+        input: EditText,
         calender: Calendar
     ): TimePickerDialog.OnTimeSetListener {
         return TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
@@ -49,7 +49,7 @@ object TimeUtils {
     }
 
     fun getDatePickerListener(
-        input: TextInputEditText,
+        input: EditText,
         calender: Calendar
     ): DatePickerDialog.OnDateSetListener {
         return DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->

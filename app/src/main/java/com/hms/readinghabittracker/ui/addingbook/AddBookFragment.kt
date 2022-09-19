@@ -43,8 +43,6 @@ class AddBookFragment :
 
 
     override fun setupUi() {
-        binding.toolbarAddBook.title = args.collectionName
-
         startListenBackStackEntry()
 
         binding.imageViewAddIcon.setOnClickListener {
@@ -108,7 +106,11 @@ class AddBookFragment :
                 agConnect.currentUser.uid.toLong(),
                 args.collectionId
             )
-            Toast.makeText(activity, "Book successfully saved!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                activity,
+                "Book successfully saved to $args.collectionName!",
+                Toast.LENGTH_SHORT
+            ).show()
             findNavController().navigate(R.id.action_addBookFragment_to_myBooksFragment)
         }
     }
