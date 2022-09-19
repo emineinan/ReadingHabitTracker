@@ -13,11 +13,13 @@ import com.hms.readinghabittracker.data.model.GoalItem
 import com.hms.readinghabittracker.databinding.FragmentGoalsBinding
 import com.hms.readinghabittracker.utils.PermissionUtils
 import com.hms.readinghabittracker.utils.TimeUtils
+import com.huawei.agconnect.auth.AGConnectAuth
 import com.huawei.hms.kit.awareness.Awareness
 import com.huawei.hms.kit.awareness.capture.TimeCategoriesResponse
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class GoalsFragment :
@@ -27,6 +29,9 @@ class GoalsFragment :
     override val viewModel: GoalsViewModel by viewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: GoalsAdapter
+
+    @Inject
+    lateinit var agConnect: AGConnectAuth
 
     override fun setupUi() {
         requestPermissions()
