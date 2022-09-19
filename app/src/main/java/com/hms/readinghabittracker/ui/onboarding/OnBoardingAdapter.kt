@@ -14,8 +14,9 @@ class OnBoardingAdapter(private val onBoardingItems: List<OnBoardingItem>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(onBoardingItem: OnBoardingItem) {
-            binding.imageViewOnBoardingItem.setAnimation(onBoardingItem.icon)
+            binding.textViewTitle.text = onBoardingItem.title
             binding.textViewDescription.text = onBoardingItem.description
+            binding.imageViewOnBoardingItem.setAnimation(onBoardingItem.icon)
         }
     }
 

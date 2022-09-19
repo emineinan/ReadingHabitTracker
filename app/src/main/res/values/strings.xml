@@ -5,9 +5,12 @@
     <string name="next">Next</string>
     <string name="finish">Finish</string>
     <string name="icon">Icon</string>
-    <string name="on_boarding_description1">Track Your Reading Time and Reading Habit</string>
-    <string name="on_boarding_description2">Achieve Your Reading Goals</string>
-    <string name="on_boarding_description3">Become a Better Reader</string>
+    <string name="on_boarding_title1">CATEGORIZE</string>
+    <string name="on_boarding_title2">ACHIEVE</string>
+    <string name="on_boarding_title3">IMPROVE YOURSELF</string>
+    <string name="on_boarding_description1">Create new collections and categorize your books.</string>
+    <string name="on_boarding_description2">Track your reading habit and achieve your reading goals.</string>
+    <string name="on_boarding_description3">Become a better reader every day as your reading habit improves.</string>
 
     <!-- Login -->
     <string name="quote">“Not all readers are leaders, but all leaders are readers.”</string>

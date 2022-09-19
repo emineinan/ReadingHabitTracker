@@ -10,7 +10,7 @@
         android:id="@+id/imageViewOnBoardingItem"
         android:layout_width="wrap_content"
         android:layout_height="400dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="96dp"
         android:contentDescription="@string/icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,15 +20,28 @@
         app:lottie_rawRes="@raw/book" />
 
     <TextView
-        android:id="@+id/textViewDescription"
-        android:layout_width="0dp"
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_marginTop="16dp"
         android:textColor="?colorPrimary"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewOnBoardingItem"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewOnBoardingItem" />
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textColor="?colorPrimary"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
         tools:text="Description" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
