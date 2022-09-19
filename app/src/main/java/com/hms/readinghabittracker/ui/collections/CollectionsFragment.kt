@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.AddCollectionDialogBinding
@@ -81,7 +80,6 @@ class CollectionsFragment :
     }
 
     private fun setAdapter() {
-        binding.recyclerViewCollections.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewCollections.setHasFixedSize(true)
         binding.recyclerViewCollections.adapter = collectionsAdapter
     }

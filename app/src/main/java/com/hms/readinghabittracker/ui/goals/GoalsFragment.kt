@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
@@ -56,7 +55,6 @@ class GoalsFragment :
 
     private fun setAdapter() {
         recyclerView = binding.recyclerViewGoals
-        recyclerView.layoutManager = LinearLayoutManager(context)
         adapter =
             GoalsAdapter(::deleteGoalItem) { id ->
                 val action = GoalsFragmentDirections.actionGoalsFragmentToGoalItemFragment(id)

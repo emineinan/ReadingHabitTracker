@@ -8,12 +8,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.FragmentMyBooksBinding
 import com.hms.readinghabittracker.ui.mybooks.adapter.MyBooksAdapter
-import com.hms.readinghabittracker.utils.extensions.setDivider
 import com.huawei.agconnect.auth.AGConnectAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -63,17 +61,14 @@ class MyBooksFragment :
     }
 
     private fun setAdapter() {
-        binding.recyclerViewMyBooks.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewMyBooks.setHasFixedSize(true)
         binding.recyclerViewMyBooks.adapter = myBooksAdapter
-        binding.recyclerViewMyBooks.setDivider(R.drawable.recyclerview_divider)
         val freeSpaceAtBottom = 100 // the bottom free space in pixels
         binding.recyclerViewMyBooks.clipToPadding = false
         binding.recyclerViewMyBooks.setPadding(binding.recyclerViewMyBooks.paddingLeft,
             binding.recyclerViewMyBooks.top,
             binding.recyclerViewMyBooks.right,
             freeSpaceAtBottom)
-
     }
 
     override fun onResume() {
