@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_begin="110dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineBottom"
@@ -83,8 +83,8 @@
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:indeterminateTint="@color/primary_color_dark"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/guidelineBottom"

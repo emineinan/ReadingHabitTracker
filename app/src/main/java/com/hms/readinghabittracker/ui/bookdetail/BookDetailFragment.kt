@@ -15,9 +15,9 @@ class BookDetailFragment :
 
     override fun setupUi() {
         super.setupUi()
-        binding.textViewBookDetailTitle.text = args.bookTitle
-        binding.textViewBookDetailAuthor.text = args.bookAuthor
-        binding.textViewBookDetailNoOfPages.text = args.bookNoOfPages.toString()
+        binding.textViewBookTitle.text = args.bookTitle
+        binding.textViewBookAuthor.text = args.bookAuthor
+        binding.textViewBookPages.text = args.bookNoOfPages.toString()
         binding.imageViewBookDetailPhoto.setImageBitmap(args.bookImage)
     }
 }

@@ -19,13 +19,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarGoalItem">
+        app:layout_constraintTop_toBottomOf="@+id/imageViewGoalItem">
 
         <ImageView
             android:id="@+id/imageViewTitleIcon"
@@ -44,7 +44,7 @@
             android:layout_marginStart="8dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:textColor="?attr/colorOnBackground"
-            android:textSize="20sp"
+            android:textSize="22sp"
             app:layout_constraintLeft_toRightOf="@id/imageViewTitleIcon"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Thing to do Title" />
@@ -67,7 +67,7 @@
             android:layout_marginStart="8dp"
             android:alpha="0.8"
             android:textColor="?attr/colorOnBackground"
-            android:textSize="17sp"
+            android:textSize="18sp"
             app:layout_constraintLeft_toRightOf="@id/imageViewDescriptionIcon"
             app:layout_constraintTop_toTopOf="@id/imageViewDescriptionIcon"
             tools:text="Thing to do description " />
@@ -90,12 +90,25 @@
             android:layout_marginStart="8dp"
             android:alpha="0.8"
             android:textColor="?attr/colorOnBackground"
-            android:textSize="15sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewDateIcon"
             app:layout_constraintLeft_toRightOf="@id/imageViewDateIcon"
             app:layout_constraintTop_toTopOf="@id/imageViewDateIcon"
             tools:text="Mon Jun 20 14:56hrs 2022" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/imageViewGoalItem"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarGoalItem"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/book" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

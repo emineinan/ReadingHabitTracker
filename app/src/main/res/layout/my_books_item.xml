@@ -9,7 +9,6 @@
     android:layout_marginTop="10dp"
     android:backgroundTint="?attr/colorSurface"
     android:longClickable="true"
-    android:padding="8dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 
@@ -22,8 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:padding="4dp"
+            android:background="@color/primary_color_dark"
             android:orientation="horizontal"
+            android:padding="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -31,13 +31,13 @@
                 android:id="@+id/textViewCollectionName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="4dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                android:textColor="@color/primary_color_dark"
-                android:textSize="25sp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
                 tools:text="Collection" />
 
             <ImageView
@@ -47,7 +47,7 @@
                 android:layout_gravity="center"
                 android:contentDescription="@string/icon"
                 app:srcCompat="@drawable/ic_book"
-                app:tint="@color/primary_color_dark" />
+                app:tint="@color/white" />
 
         </LinearLayout>
 

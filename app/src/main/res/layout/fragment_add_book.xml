@@ -21,8 +21,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_marginTop="32dp"
         android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,6 +38,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:contentDescription="@string/book"
+                android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
