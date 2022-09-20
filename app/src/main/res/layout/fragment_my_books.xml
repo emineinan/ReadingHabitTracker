@@ -40,6 +40,7 @@
         android:gravity="center"
         android:padding="16dp"
         android:text="@string/warning_no_collection"
+        android:textColor="@color/primary_color_dark"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
