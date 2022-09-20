@@ -108,7 +108,7 @@ class AddBookFragment :
             )
             Toast.makeText(
                 activity,
-                "Book successfully saved to $args.collectionName!",
+                "Book successfully saved to " + args.collectionName,
                 Toast.LENGTH_SHORT
             ).show()
             findNavController().navigate(R.id.action_addBookFragment_to_myBooksFragment)
