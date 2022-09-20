@@ -70,7 +70,7 @@
         android:id="@+id/goalsFragment"
         android:name="com.hms.readinghabittracker.ui.goals.GoalsFragment"
         android:label="fragment_goals"
-        tools:layout="@layout/fragment_goals" >
+        tools:layout="@layout/fragment_goals">
         <action
             android:id="@+id/action_goalsFragment_to_addGoalFragment"
             app:destination="@id/addGoalFragment" />
@@ -82,7 +82,11 @@
         android:id="@+id/collectionsFragment"
         android:name="com.hms.readinghabittracker.ui.collections.CollectionsFragment"
         android:label="fragment_collections"
-        tools:layout="@layout/fragment_collections" />
+        tools:layout="@layout/fragment_collections" >
+        <action
+            android:id="@+id/action_collectionsFragment_to_myBooksFragment"
+            app:destination="@id/myBooksFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addBookFragment"
         android:name="com.hms.readinghabittracker.ui.addingbook.AddBookFragment"
@@ -116,7 +120,8 @@
     <fragment
         android:id="@+id/filterFragment"
         android:name="com.hms.readinghabittracker.ui.editimage.filter.FilterFragment"
-        android:label="FilterFragment">
+        android:label="FilterFragment"
+        tools:layout="@layout/fragment_filter">
         <argument
             android:name="image"
             app:argType="android.graphics.Bitmap" />
@@ -124,7 +129,8 @@
     <fragment
         android:id="@+id/addGoalFragment"
         android:name="com.hms.readinghabittracker.ui.goals.AddGoalFragment"
-        android:label="AddGoalFragment" >
+        android:label="AddGoalFragment"
+        tools:layout="@layout/fragment_add_goal">
         <action
             android:id="@+id/action_addGoalFragment_to_goalsFragment"
             app:destination="@id/goalsFragment" />
@@ -132,7 +138,8 @@
     <fragment
         android:id="@+id/goalItemFragment"
         android:name="com.hms.readinghabittracker.ui.goals.GoalItemFragment"
-        android:label="GoalItemFragment" >
+        android:label="GoalItemFragment"
+        tools:layout="@layout/fragment_goal_item">
         <argument
             android:name="id"
             app:argType="integer" />
@@ -158,7 +165,8 @@
     <fragment
         android:id="@+id/bookDetailFragment"
         android:name="com.hms.readinghabittracker.ui.bookdetail.BookDetailFragment"
-        android:label="BookDetailFragment">
+        android:label="BookDetailFragment"
+        tools:layout="@layout/fragment_book_detail">
         <argument
             android:name="bookTitle"
             app:argType="string" />

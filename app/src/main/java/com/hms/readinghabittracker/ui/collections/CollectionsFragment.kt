@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.hms.readinghabittracker.R
 import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.AddCollectionDialogBinding
@@ -68,6 +69,7 @@ class CollectionsFragment :
                             "Collection is saved successfully.",
                             Toast.LENGTH_SHORT
                         ).show()
+                        findNavController().navigate(R.id.action_collectionsFragment_to_myBooksFragment)
                     }
                     if (collectionsUiState.savedCollectionList.isNotEmpty()) {
                         collectionsUiState.savedCollectionList.let {
