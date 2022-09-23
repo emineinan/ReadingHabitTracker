@@ -1,53 +1,53 @@
 package com.hms.readinghabittracker.ui.login
 
 import android.app.Activity
-import android.content.Intent
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.hms.readinghabittracker.R
+import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.databinding.FragmentLoginBinding
-import com.hms.readinghabittracker.utils.Constant
 import com.huawei.hms.support.hwid.service.HuaweiIdAuthService
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
-    private lateinit var binding: FragmentLoginBinding
-    private val viewModel: LoginViewModel by viewModels()
+class LoginFragment :
+    BaseFragment<FragmentLoginBinding, LoginViewModel>(FragmentLoginBinding::inflate) {
+    override val viewModel: LoginViewModel by viewModels()
 
     @Inject
     lateinit var service: HuaweiIdAuthService
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
-
-        binding.buttonLogin.setOnClickListener {
-            signIn()
+    private var signInWithHuaweiID =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                viewModel.signInUserAndSaveToCloud(result.data)
+            }
         }
 
-        return binding.root
+    override fun setupListener() {
+        binding.buttonLogin.setOnClickListener {
+            signInWithHuaweiID.launch(service.signInIntent)
+        }
     }
 
-    private fun signIn() {
-        startActivityForResult(service.signInIntent, Constant.loginRequestCode)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == Constant.loginRequestCode) {
-            if (resultCode == Activity.RESULT_OK) {
-                viewModel.userSignedIn(data)
-                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+    override fun setupObserver() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loginUiState.collect { loginUiState ->
+                    loginUiState.error.firstOrNull()?.let {
+                        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    }
+                    loginUiState.isUSerSigned.firstOrNull()?.let {
+                        findNavController().navigate(R.id.action_loginFragment_to_myBooksFragment)
+                    }
+                }
             }
         }
     }

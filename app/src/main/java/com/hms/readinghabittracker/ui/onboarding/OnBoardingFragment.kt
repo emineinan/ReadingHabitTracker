@@ -9,47 +9,41 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.hms.readinghabittracker.R
+import com.hms.readinghabittracker.base.BaseFragment
 import com.hms.readinghabittracker.data.model.OnBoardingItem
+import com.hms.readinghabittracker.databinding.FragmentMyBooksBinding
 import com.hms.readinghabittracker.databinding.FragmentOnBoardingBinding
+import com.hms.readinghabittracker.ui.mybooks.MyBooksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OnBoardingFragment : Fragment() {
-    private lateinit var binding: FragmentOnBoardingBinding
-    private val viewModel: OnBoardingViewModel by viewModels()
+class OnBoardingFragment :
+    BaseFragment<FragmentOnBoardingBinding, OnBoardingViewModel>(FragmentOnBoardingBinding::inflate) {
+
+    override val viewModel: OnBoardingViewModel by viewModels()
     private val onBoardingAdapter by lazy {
         OnBoardingAdapter(
             listOf(
                 OnBoardingItem(
                     getString(R.string.on_boarding_title1),
                     getString(R.string.on_boarding_description1),
-                    R.drawable.ic_book
+                    R.raw.collections
                 ),
                 OnBoardingItem(
                     getString(R.string.on_boarding_title2),
                     getString(R.string.on_boarding_description2),
-                    R.drawable.ic_book
+                    R.raw.focus
                 ),
                 OnBoardingItem(
                     getString(R.string.on_boarding_title3),
                     getString(R.string.on_boarding_description3),
-                    R.drawable.ic_book
+                    R.raw.book
                 )
             )
         )
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentOnBoardingBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun setupUi() {
         binding.viewPagerSlider.adapter = onBoardingAdapter
         binding.indicator.setViewPager(binding.viewPagerSlider)
         binding.viewPagerSlider.registerOnPageChangeCallback(object :

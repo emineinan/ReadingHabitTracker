@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hms.readinghabittracker.utils.CustomToolbar
+        android:id="@+id/toolbarGoalItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="4dp"
+        app:CustomToolbar_title="@string/goal"
+        app:CustomToolbar_title_color="@color/primary_color_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewGoalItem">
+
+        <ImageView
+            android:id="@+id/imageViewTitleIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@string/icon"
+            android:src="@drawable/ic_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorSecondary" />
+
+        <TextView
+            android:id="@+id/textViewGoalItemTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="22sp"
+            app:layout_constraintLeft_toRightOf="@id/imageViewTitleIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Thing to do Title" />
+
+        <ImageView
+            android:id="@+id/imageViewDescriptionIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/icon"
+            android:src="@drawable/ic_text"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageViewTitleIcon"
+            app:tint="?attr/colorSecondary" />
+
+        <TextView
+            android:id="@+id/textViewGoalItemDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:alpha="0.8"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toRightOf="@id/imageViewDescriptionIcon"
+            app:layout_constraintTop_toTopOf="@id/imageViewDescriptionIcon"
+            tools:text="Thing to do description " />
+
+        <ImageView
+            android:id="@+id/imageViewDateIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/icon"
+            android:src="@drawable/ic_date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageViewDescriptionIcon"
+            app:tint="?attr/colorSecondary" />
+
+        <TextView
+            android:id="@+id/textViewGoalItemDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:alpha="0.8"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewDateIcon"
+            app:layout_constraintLeft_toRightOf="@id/imageViewDateIcon"
+            app:layout_constraintTop_toTopOf="@id/imageViewDateIcon"
+            tools:text="Mon Jun 20 14:56hrs 2022" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/imageViewGoalItem"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarGoalItem"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/book" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.hms.readinghabittracker"
-        minSdk 21
+        minSdk 26
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -62,7 +62,8 @@ android {
 }
 
 dependencies {
-    def nav_version = "2.5.0"
+    def nav_version = "2.5.1"
+    def room_version = "2.4.3"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
@@ -86,9 +87,45 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.42"
     kapt 'com.google.dagger:hilt-compiler:2.42'
 
+    // Lottie Animation
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
+
+    // Easy Permissions
+    implementation 'pub.devrel:easypermissions:3.0.0'
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+
+    // Room Database
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // HMS Core Kits
     // Huawei Account Kit
     implementation 'com.huawei.hms:hwid:6.4.0.301'
 
-    //Huawei Auth Service
-    implementation "com.huawei.agconnect:agconnect-auth:1.6.5.300"
+    // Huawei Auth Service
+    implementation "com.huawei.agconnect:agconnect-auth:1.7.0.300"
+
+    // Huawei Cloud DB
+    implementation 'com.huawei.agconnect:agconnect-cloud-database:1.5.3.300'
+
+    // Huawei Awareness Kit
+    implementation 'com.huawei.hms:awareness:3.1.0.302'
+
+    // Huawei Image Kit
+    implementation 'com.huawei.hms:image-vision:1.0.3.305'
+
+    // Huawei Map Kit
+    implementation 'com.huawei.hms:maps:6.4.1.300'
+
+    // Huawei Location Kit
+    implementation 'com.huawei.hms:location:6.3.0.300'
+
+    // Huawei Site Kit
+    implementation 'com.huawei.hms:site:6.2.0.301'
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/myBooksFragment"
+        android:icon="@drawable/ic_my_books"
+        android:title="@string/my_books" />
+    <item
+        android:id="@+id/goalsFragment"
+        android:icon="@drawable/ic_goal"
+        android:title="@string/goals" />
+    <item
+        android:id="@+id/nearestLibrariesFragment"
+        android:icon="@drawable/ic_library"
+        android:title="@string/nearest_libraries" />
+</menu>

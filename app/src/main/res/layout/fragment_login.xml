@@ -7,24 +7,50 @@
     tools:context=".ui.login.LoginFragment">
 
     <TextView
-        android:id="@+id/textViewWelcome"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewQuote"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="WELCOME"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:padding="30dp"
+        android:text="@string/quote"
+        android:textColor="@color/primary_color_dark"
+        android:textSize="22sp"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textViewFamous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/famous"
+        android:textColor="@color/primary_color_dark"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textViewQuote"
+        app:layout_constraintTop_toBottomOf="@+id/textViewQuote" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/imageViewIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFamous"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/welcome" />
+
     <com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton
         android:id="@+id/buttonLogin"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginBottom="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

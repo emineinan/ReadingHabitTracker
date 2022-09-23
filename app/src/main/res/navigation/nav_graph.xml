@@ -6,18 +6,28 @@
     app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.hms.readinghabittracker.ui.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/myBooksFragment"
+        android:name="com.hms.readinghabittracker.ui.mybooks.MyBooksFragment"
+        android:label="fragment_my_books"
+        tools:layout="@layout/fragment_my_books">
+        <action
+            android:id="@+id/action_myBooksFragment_to_collectionsFragment"
+            app:destination="@id/collectionsFragment" />
+        <action
+            android:id="@+id/action_myBooksFragment_to_addBookFragment"
+            app:destination="@id/addBookFragment" />
+        <action
+            android:id="@+id/action_myBooksFragment_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.hms.readinghabittracker.ui.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_loginFragment_to_myBooksFragment"
+            app:destination="@id/myBooksFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -27,8 +37,8 @@
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splashFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_splashFragment_to_myBooksFragment"
+            app:destination="@id/myBooksFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
         <action
@@ -41,6 +51,9 @@
             app:destination="@id/onBoardingFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_goalItemFragment"
+            app:destination="@id/goalItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/onBoardingFragment"
@@ -52,5 +65,119 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/onBoardingFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/goalsFragment"
+        android:name="com.hms.readinghabittracker.ui.goals.GoalsFragment"
+        android:label="fragment_goals"
+        tools:layout="@layout/fragment_goals">
+        <action
+            android:id="@+id/action_goalsFragment_to_addGoalFragment"
+            app:destination="@id/addGoalFragment" />
+        <action
+            android:id="@+id/action_goalsFragment_to_goalItemFragment"
+            app:destination="@id/goalItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/collectionsFragment"
+        android:name="com.hms.readinghabittracker.ui.collections.CollectionsFragment"
+        android:label="fragment_collections"
+        tools:layout="@layout/fragment_collections" >
+        <action
+            android:id="@+id/action_collectionsFragment_to_myBooksFragment"
+            app:destination="@id/myBooksFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addBookFragment"
+        android:name="com.hms.readinghabittracker.ui.addingbook.AddBookFragment"
+        android:label="fragment_add_book"
+        tools:layout="@layout/fragment_add_book">
+        <argument
+            android:name="collectionName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_addBookFragment_to_myBooksFragment"
+            app:destination="@id/myBooksFragment" />
+        <argument
+            android:name="collectionId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_addBookFragment_to_cropFragment"
+            app:destination="@id/cropFragment" />
+        <action
+            android:id="@+id/action_addBookFragment_to_filterFragment"
+            app:destination="@id/filterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cropFragment"
+        android:name="com.hms.readinghabittracker.ui.editimage.crop.CropFragment"
+        android:label="fragment_crop"
+        tools:layout="@layout/fragment_crop">
+        <argument
+            android:name="image"
+            app:argType="android.graphics.Bitmap" />
+    </fragment>
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.hms.readinghabittracker.ui.editimage.filter.FilterFragment"
+        android:label="FilterFragment"
+        tools:layout="@layout/fragment_filter">
+        <argument
+            android:name="image"
+            app:argType="android.graphics.Bitmap" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGoalFragment"
+        android:name="com.hms.readinghabittracker.ui.goals.AddGoalFragment"
+        android:label="AddGoalFragment"
+        tools:layout="@layout/fragment_add_goal">
+        <action
+            android:id="@+id/action_addGoalFragment_to_goalsFragment"
+            app:destination="@id/goalsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/goalItemFragment"
+        android:name="com.hms.readinghabittracker.ui.goals.GoalItemFragment"
+        android:label="GoalItemFragment"
+        tools:layout="@layout/fragment_goal_item">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/nearestLibrariesFragment"
+        android:name="com.hms.readinghabittracker.ui.nearestlibraries.NearestLibrariesFragment"
+        android:label="fragment_nearest_libraries"
+        tools:layout="@layout/fragment_nearest_libraries">
+        <action
+            android:id="@+id/action_nearestLibrariesFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.hms.readinghabittracker.ui.map.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map">
+        <argument
+            android:name="library"
+            app:argType="com.hms.readinghabittracker.data.model.Library" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookDetailFragment"
+        android:name="com.hms.readinghabittracker.ui.bookdetail.BookDetailFragment"
+        android:label="BookDetailFragment"
+        tools:layout="@layout/fragment_book_detail">
+        <argument
+            android:name="bookTitle"
+            app:argType="string" />
+        <argument
+            android:name="bookImage"
+            app:argType="android.graphics.Bitmap" />
+        <argument
+            android:name="bookAuthor"
+            app:argType="string" />
+        <argument
+            android:name="bookNoOfPages"
+            app:argType="integer" />
     </fragment>
 </navigation>
